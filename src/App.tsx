@@ -1,9 +1,30 @@
+import { useState } from 'react';
 import './App.css';
+import { SwipeContainer } from './components/SwipeContainer';
+import { PageDots } from './components/PageDots';
+import { LandingScreen } from './components/LandingScreen';
+import { BreathingScreen } from './components/BreathingScreen';
+import { MeditationScreen } from './components/MeditationScreen';
 
 function App() {
+  const [activePage, setActivePage] = useState(0);
+
   return (
-    <div className="w-screen h-dvh bg-surface flex items-center justify-center">
-      <p className="text-accent">mindfulONE</p>
+    <div
+      data-safe-area
+      className="w-screen h-dvh bg-black"
+      style={{
+        paddingTop: 'env(safe-area-inset-top)',
+        paddingLeft: 'env(safe-area-inset-left)',
+        paddingRight: 'env(safe-area-inset-right)',
+      }}
+    >
+      <SwipeContainer onPageChange={setActivePage}>
+        <LandingScreen />
+        <BreathingScreen />
+        <MeditationScreen />
+      </SwipeContainer>
+      <PageDots total={3} active={activePage} />
     </div>
   );
 }
