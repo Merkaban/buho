@@ -11,7 +11,7 @@ export function SwipeContainer({ children, onPageChange }: SwipeContainerProps) 
 
   const handleScroll = useCallback(() => {
     const el = containerRef.current;
-    if (!el) return;
+    if (!el || el.clientWidth === 0) return;
     const index = Math.round(el.scrollLeft / el.clientWidth);
     if (index !== lastIndexRef.current) {
       lastIndexRef.current = index;
