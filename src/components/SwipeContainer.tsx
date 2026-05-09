@@ -8,6 +8,8 @@ interface SwipeContainerProps {
 export function SwipeContainer({ children, onPageChange }: SwipeContainerProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const lastIndexRef = useRef(0);
+  const onPageChangeRef = useRef(onPageChange);
+  onPageChangeRef.current = onPageChange;
 
   const handleScroll = useCallback(() => {
     const el = containerRef.current;
@@ -15,9 +17,9 @@ export function SwipeContainer({ children, onPageChange }: SwipeContainerProps) 
     const index = Math.round(el.scrollLeft / el.clientWidth);
     if (index !== lastIndexRef.current) {
       lastIndexRef.current = index;
-      onPageChange(index);
+      onPageChangeRef.current(index);
     }
-  }, [onPageChange]);
+  }, []);
 
   return (
     <div
