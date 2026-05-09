@@ -8,7 +8,7 @@
 
 | # | Phase | Goal | Requirements |
 |---|-------|------|--------------|
-| 1 | PWA Shell & Project Setup | Installable, offline-capable PWA skeleton running on iOS | PWA-01, PWA-02, PWA-03, PWA-04 |
+| 1 | 1/3 | In Progress|  |
 | 2 | Breathing Timer & Animation | Working breathing circle that animates through inhale/hold/exhale cycle | BRTH-01, BRTH-02, BRTH-03, BRTH-04, BRTH-05, BRTH-06, BRTH-07, BRTH-08 |
 | 3 | Audio Integration | Voice cues and background music playing in sync with breathing phases | BRTH-09, BRTH-10, BRTH-11, BRTH-12 |
 | 4 | Wake Lock & Session Polish | Screen stays awake during sessions, polished session experience | BRTH-13 |
@@ -22,11 +22,11 @@
 ### Phase 1: PWA Shell & Project Setup
 **Goal:** Installable, offline-capable PWA skeleton that runs standalone on iOS with proper safe area handling
 **Mode:** mvp
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
 **Wave 1**
-- [ ] 01-01-PLAN.md — Project scaffold with PWA config, iOS meta tags, and failing test suite
+- [x] 01-01-PLAN.md — Project scaffold with PWA config, iOS meta tags, and failing test suite
 
 **Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 01-02-PLAN.md — 3-panel swipeable UI shell with page dots and safe areas (makes tests pass)

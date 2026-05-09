@@ -9,10 +9,10 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### PWA Foundation
 
-- [ ] **PWA-01**: App is installable on iOS via Add to Home Screen
-- [ ] **PWA-02**: App works fully offline after initial load
-- [ ] **PWA-03**: App runs in standalone mode without browser chrome
-- [ ] **PWA-04**: App handles iOS safe areas (notch, home indicator)
+- [x] **PWA-01**: App is installable on iOS via Add to Home Screen
+- [x] **PWA-02**: App works fully offline after initial load
+- [x] **PWA-03**: App runs in standalone mode without browser chrome
+- [x] **PWA-04**: App handles iOS safe areas (notch, home indicator)
 
 ### Breathing
 
@@ -84,10 +84,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PWA-01 | Phase 1 | Pending |
-| PWA-02 | Phase 1 | Pending |
-| PWA-03 | Phase 1 | Pending |
-| PWA-04 | Phase 1 | Pending |
+| PWA-01 | Phase 1 | Complete |
+| PWA-02 | Phase 1 | Complete |
+| PWA-03 | Phase 1 | Complete |
+| PWA-04 | Phase 1 | Complete |
 | BRTH-01 | Phase 2 | Pending |
 | BRTH-02 | Phase 2 | Pending |
 | BRTH-03 | Phase 2 | Pending |
