@@ -84,34 +84,34 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| PWA-01 | — | Pending |
-| PWA-02 | — | Pending |
-| PWA-03 | — | Pending |
-| PWA-04 | — | Pending |
-| BRTH-01 | — | Pending |
-| BRTH-02 | — | Pending |
-| BRTH-03 | — | Pending |
-| BRTH-04 | — | Pending |
-| BRTH-05 | — | Pending |
-| BRTH-06 | — | Pending |
-| BRTH-07 | — | Pending |
-| BRTH-08 | — | Pending |
-| BRTH-09 | — | Pending |
-| BRTH-10 | — | Pending |
-| BRTH-11 | — | Pending |
-| BRTH-12 | — | Pending |
-| BRTH-13 | — | Pending |
-| SETT-01 | — | Pending |
-| SETT-02 | — | Pending |
-| NAV-01 | — | Pending |
-| NAV-02 | — | Pending |
-| MEDT-01 | — | Pending |
-| MEDT-02 | — | Pending |
+| PWA-01 | Phase 1 | Pending |
+| PWA-02 | Phase 1 | Pending |
+| PWA-03 | Phase 1 | Pending |
+| PWA-04 | Phase 1 | Pending |
+| BRTH-01 | Phase 2 | Pending |
+| BRTH-02 | Phase 2 | Pending |
+| BRTH-03 | Phase 2 | Pending |
+| BRTH-04 | Phase 2 | Pending |
+| BRTH-05 | Phase 2 | Pending |
+| BRTH-06 | Phase 2 | Pending |
+| BRTH-07 | Phase 2 | Pending |
+| BRTH-08 | Phase 2 | Pending |
+| BRTH-09 | Phase 3 | Pending |
+| BRTH-10 | Phase 3 | Pending |
+| BRTH-11 | Phase 3 | Pending |
+| BRTH-12 | Phase 3 | Pending |
+| BRTH-13 | Phase 4 | Pending |
+| SETT-01 | Phase 5 | Pending |
+| SETT-02 | Phase 5 | Pending |
+| NAV-01 | Phase 6 | Pending |
+| NAV-02 | Phase 6 | Pending |
+| MEDT-01 | Phase 6 | Pending |
+| MEDT-02 | Phase 6 | Pending |
 
 **Coverage:**
 - v1 requirements: 23 total
-- Mapped to phases: 0
-- Unmapped: 23
+- Mapped to phases: 23
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-05-09*
