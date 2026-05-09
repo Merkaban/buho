@@ -25,8 +25,13 @@
 **Plans:** 3 plans
 
 Plans:
+**Wave 1**
 - [ ] 01-01-PLAN.md — Project scaffold with PWA config, iOS meta tags, and failing test suite
+
+**Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 01-02-PLAN.md — 3-panel swipeable UI shell with page dots and safe areas (makes tests pass)
+
+**Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 01-03-PLAN.md — Production build verification and iOS device checkpoint
 
 **Success Criteria:**

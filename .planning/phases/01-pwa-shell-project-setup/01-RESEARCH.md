@@ -457,7 +457,7 @@ export function PageDots({ total, active }: PageDotsProps) {
 | A2 | `scrollend` event available in Safari 18+ | Common Pitfalls (Pitfall 4) | Low — fallback approach (index comparison) works universally |
 | A3 | Vercel free tier has no bandwidth limit that would affect a simple static PWA | Deployment | Very low — meditation app has negligible traffic |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Placeholder icons format**
    - What we know: Need 192x192, 512x512, and 180x180 (apple-touch-icon) PNG files
