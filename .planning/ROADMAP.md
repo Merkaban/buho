@@ -22,6 +22,13 @@
 ### Phase 1: PWA Shell & Project Setup
 **Goal:** Installable, offline-capable PWA skeleton that runs standalone on iOS with proper safe area handling
 **Mode:** mvp
+**Plans:** 3 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Project scaffold with PWA config, iOS meta tags, and failing test suite
+- [ ] 01-02-PLAN.md — 3-panel swipeable UI shell with page dots and safe areas (makes tests pass)
+- [ ] 01-03-PLAN.md — Production build verification and iOS device checkpoint
+
 **Success Criteria:**
 1. App can be added to iOS home screen and launches without browser chrome
 2. App loads and renders a dark screen when offline (airplane mode)
@@ -118,4 +125,4 @@ Phase 1 (PWA Shell)
 
 ---
 *Created: 2026-05-09*
-*Last updated: 2026-05-09 after initial creation*
+*Last updated: 2026-05-09 after Phase 1 planning*
