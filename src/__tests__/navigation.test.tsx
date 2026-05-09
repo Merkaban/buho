@@ -11,14 +11,14 @@ describe('Navigation Structure (D-04, D-06)', () => {
 
   it('renders page indicator dots', () => {
     render(<App />);
-    const dots = screen.getByRole('tablist', { name: /navigation/i });
+    const dots = screen.getByRole('group', { name: /navigation indicator/i });
     expect(dots).toBeDefined();
   });
 
   it('renders 3 dot indicators', () => {
-    render(<App />);
-    const tabs = screen.getAllByRole('tab');
-    expect(tabs.length).toBe(3);
+    const { container } = render(<App />);
+    const dots = container.querySelectorAll('[role="group"] > [aria-hidden="true"]');
+    expect(dots.length).toBe(3);
   });
 
   it('renders landing screen with app name mindfulONE', () => {
