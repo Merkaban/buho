@@ -1,10 +1,12 @@
-import { useReducer, useEffect } from 'react';
+import { useReducer, useEffect, useCallback } from 'react';
 import { BreathingCircle } from './BreathingCircle';
 import { TimingControls } from './TimingControls';
+import { CountdownDisplay } from './CountdownDisplay';
 import { MusicToggle } from './MusicToggle';
 import { useBreathingAnimation, breathingReducer } from '../hooks/useBreathingAnimation';
 import { useBreathingAudio } from '../hooks/useBreathingAudio';
 import { useWakeLock } from '../hooks/useWakeLock';
+import { useSessionTimer } from '../hooks/useSessionTimer';
 import { loadSettings, saveSettings } from '../hooks/useSettings';
 import type { BreathingState } from '../types/breathing';
 
@@ -19,6 +21,15 @@ export function BreathingScreen() {
   const { start: audioStart, stop: audioStop, toggleMusic } = useBreathingAudio();
   const { activate: wakeLockActivate, release: wakeLockRelease } = useWakeLock();
 
+  const handleAutoStop = useCallback(() => {
+    dispatch({ type: 'STOP' });
+    stop();
+    audioStop();
+    wakeLockRelease();
+  }, [stop, audioStop, wakeLockRelease]);
+
+  const { remaining, start: timerStart, clear: timerClear } = useSessionTimer(handleAutoStop);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       saveSettings(state.config, state.musicEnabled);
@@ -32,11 +43,13 @@ export function BreathingScreen() {
       start(state.config);
       audioStart(state.config); // D-08: starts music + schedules cues, D-11: iOS unlock via gesture
       wakeLockActivate();
+      timerStart(state.config.duration);
     } else {
       dispatch({ type: 'STOP' });
       stop();
       audioStop(); // D-10: cuts all audio immediately
       wakeLockRelease();
+      timerClear();
     }
   };
 
@@ -62,6 +75,10 @@ export function BreathingScreen() {
         ref={elementRef}
         session={state.session}
         onClick={handleCircleTap}
+      />
+      <CountdownDisplay
+        remainingSeconds={remaining}
+        visible={state.session === 'running' && state.config.duration > 0}
       />
       <MusicToggle
         enabled={state.musicEnabled}
