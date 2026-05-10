@@ -19,7 +19,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-09)
 
 **Core value:** The breathing guide must work flawlessly — correct timing, smooth animation, audio cues in sync, and the screen must never lock during a session.
-**Current focus:** Phase 02 — breathing-timer-animation
+**Current focus:** Phase 03 — audio-integration
 
 ## Current Status
 
@@ -54,7 +54,7 @@ Plans: 6/6 complete (Phase 1: 3/3, Phase 2: 3/3)
 - Circle base size 48px (w-12 h-12) scales to 220px via transform scale(4.583)
 - onfinish recursion loop for continuous cycling (enables config hot-swap between cycles)
 - Overlay controls use absolute positioning + opacity fade to avoid layout shift
-- Visual palette: #0a0a0f background, #f5f0eb ivory circle, 30px+8px glow for visibility
+- Visual palette: #5f7d60 sage green background, #f5f0eb ivory circle, 30px+8px glow for visibility
 
 ## Performance Metrics
 
