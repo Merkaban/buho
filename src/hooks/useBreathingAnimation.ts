@@ -1,4 +1,4 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useEffect } from 'react';
 import type { BreathingState, BreathingAction, BreathingConfig } from '../types/breathing';
 import { MIN_SECONDS, MAX_SECONDS } from '../types/breathing';
 
@@ -70,7 +70,6 @@ export function useBreathingAnimation() {
     });
 
     anim.onfinish = () => {
-      // Loop: restart cycle (picks up any config changes via configRef)
       startCycle();
     };
 
@@ -86,13 +85,24 @@ export function useBreathingAnimation() {
   const stop = useCallback(() => {
     runningRef.current = false;
     if (animationRef.current) {
+      animationRef.current.onfinish = null;
       animationRef.current.cancel();
       animationRef.current = null;
     }
-    // Reset scale to 1 (48px natural size)
     if (elementRef.current) {
       elementRef.current.style.transform = 'scale(1)';
     }
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      runningRef.current = false;
+      if (animationRef.current) {
+        animationRef.current.onfinish = null;
+        animationRef.current.cancel();
+        animationRef.current = null;
+      }
+    };
   }, []);
 
   return { elementRef, start, stop };
