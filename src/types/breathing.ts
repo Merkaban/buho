@@ -9,6 +9,7 @@ export interface BreathingConfig {
 export interface BreathingState {
   session: SessionState;
   config: BreathingConfig;
+  musicEnabled: boolean;
 }
 
 export type BreathingAction =
@@ -16,7 +17,8 @@ export type BreathingAction =
   | { type: 'STOP' }
   | { type: 'SET_INHALE'; value: number }
   | { type: 'SET_HOLD'; value: number }
-  | { type: 'SET_EXHALE'; value: number };
+  | { type: 'SET_EXHALE'; value: number }
+  | { type: 'TOGGLE_MUSIC' };
 
 export const DEFAULT_CONFIG: BreathingConfig = {
   inhale: 5,

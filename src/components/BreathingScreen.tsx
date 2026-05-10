@@ -8,6 +8,7 @@ import type { BreathingState } from '../types/breathing';
 const initialState: BreathingState = {
   session: 'idle',
   config: { ...DEFAULT_CONFIG },
+  musicEnabled: true,
 };
 
 export function BreathingScreen() {

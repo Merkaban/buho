@@ -26,6 +26,8 @@ export function breathingReducer(state: BreathingState, action: BreathingAction)
       const value = Math.max(MIN_SECONDS.exhale, Math.min(MAX_SECONDS.exhale, action.value));
       return { ...state, config: { ...state.config, exhale: value } };
     }
+    case 'TOGGLE_MUSIC':
+      return { ...state, musicEnabled: !state.musicEnabled };
     default:
       return state;
   }

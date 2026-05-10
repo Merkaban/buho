@@ -6,6 +6,7 @@ import type { BreathingState } from '../types/breathing';
 const initialState: BreathingState = {
   session: 'idle',
   config: { ...DEFAULT_CONFIG },
+  musicEnabled: true,
 };
 
 describe('Breathing State Reducer (BRTH-01, BRTH-02, BRTH-03, BRTH-04, BRTH-05)', () => {
