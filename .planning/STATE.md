@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-05-10T07:49:26Z"
+last_updated: "2026-05-10T07:52:44Z"
 progress:
   total_phases: 6
   completed_phases: 1
   total_plans: 6
-  completed_plans: 4
-  percent: 67
+  completed_plans: 5
+  percent: 83
 ---
 
 # Project State: mindfulONE
@@ -26,7 +26,7 @@ See: .planning/PROJECT.md (updated 2026-05-09)
 | Phase | Name | Status | Progress |
 |-------|------|--------|----------|
 | 1 | PWA Shell & Project Setup | Complete | 100% (3/3 plans) |
-| 2 | Breathing Timer & Animation | Executing | 33% (1/3 plans) |
+| 2 | Breathing Timer & Animation | Executing | 67% (2/3 plans) |
 | 3 | Audio Integration | Pending | 0% |
 | 4 | Wake Lock & Session Polish | Pending | 0% |
 | 5 | Settings & Persistence | Pending | 0% |
@@ -34,8 +34,8 @@ See: .planning/PROJECT.md (updated 2026-05-09)
 
 ## Milestone Progress
 
-Progress: [██████████] 67%
-Plans: 4/6 complete (Phase 1: 3/3, Phase 2: 1/3)
+Progress: [████████████] 83%
+Plans: 5/6 complete (Phase 1: 3/3, Phase 2: 2/3)
 
 ## Decisions
 
@@ -49,6 +49,10 @@ Plans: 4/6 complete (Phase 1: 3/3, Phase 2: 1/3)
 - Types define contract before implementation - enables parallel development
 - Element.prototype.animate mocked globally in test setup for jsdom compatibility
 - data-session attribute on container element exposes session state for testing
+- breathingReducer exported separately from hook for independent unit testing
+- configRef pattern enables mid-session config updates on next animation cycle
+- Circle base size 48px (w-12 h-12) scales to 220px via transform scale(4.583)
+- onfinish recursion loop for continuous cycling (enables config hot-swap between cycles)
 
 ## Performance Metrics
 
@@ -58,12 +62,13 @@ Plans: 4/6 complete (Phase 1: 3/3, Phase 2: 1/3)
 | 01 | 02 | 2min | 2 | 7 |
 | 01 | 03 | 5min | 2 | 0 |
 | 02 | 01 | 1min | 2 | 3 |
+| 02 | 02 | 1min | 2 | 3 |
 
 ## Last Session
 
-- **Timestamp:** 2026-05-10T07:49:26Z
-- **Completed:** 02-01-PLAN.md (Types & Failing Tests)
-- **Resume:** 02-02-PLAN.md (Breathing Timer Implementation)
+- **Timestamp:** 2026-05-10T07:52:44Z
+- **Completed:** 02-02-PLAN.md (Breathing Timer Implementation)
+- **Resume:** 02-03-PLAN.md (Configurable Timing Controls)
 
 ---
-*Last updated: 2026-05-10 after plan 02-01 completion*
+*Last updated: 2026-05-10 after plan 02-02 completion*
