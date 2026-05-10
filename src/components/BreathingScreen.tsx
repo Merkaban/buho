@@ -29,7 +29,7 @@ export function BreathingScreen() {
       data-panel="breathing"
       data-session={state.session}
       aria-label="Breathing"
-      className="w-screen h-dvh flex-shrink-0 snap-start snap-always flex items-center justify-center bg-[#0a0a0f] relative"
+      className="w-screen h-dvh flex-shrink-0 snap-start snap-always flex items-center justify-center bg-[#5f7d60] relative"
     >
       <TimingControls
         config={state.config}

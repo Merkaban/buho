@@ -12,7 +12,7 @@ function App() {
   return (
     <div
       data-safe-area
-      className="w-screen h-dvh bg-black"
+      className="w-screen h-dvh bg-[#5f7d60]"
       style={{
         paddingTop: 'env(safe-area-inset-top)',
         paddingLeft: 'env(safe-area-inset-left)',
