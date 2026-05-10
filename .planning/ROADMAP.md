@@ -102,6 +102,12 @@ Plans:
 ### Phase 4: Wake Lock & Session Polish
 **Goal:** Screen never locks during an active breathing session on iOS
 **Mode:** mvp
+**Plans:** 1 plan
+
+Plans:
+**Wave 1**
+- [ ] 04-01-PLAN.md — useWakeLock hook with TDD (RED then GREEN) and BreathingScreen integration
+
 **Success Criteria:**
 1. Screen stays awake during active breathing session on iOS
 2. Screen lock resumes normally after session stops
@@ -129,7 +135,7 @@ Plans:
 **Mode:** mvp
 **Success Criteria:**
 1. User can swipe left/right to switch between breathing and meditation modes
-2. Page indicator dots show which mode is currently active
+2. Page indicator dots show which mode is active
 3. Meditation screen displays a placeholder/coming-soon message
 4. Meditation screen uses the same dark minimal design
 5. Swipe gesture does not interfere with breathing controls
@@ -151,4 +157,4 @@ Phase 1 (PWA Shell)
 
 ---
 *Created: 2026-05-09*
-*Last updated: 2026-05-10 after completing 03-02 audio implementation (phase 3 complete)*
+*Last updated: 2026-05-10 after Phase 4 planning*
