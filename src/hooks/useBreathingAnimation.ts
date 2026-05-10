@@ -1,6 +1,6 @@
 import { useRef, useCallback, useEffect } from 'react';
 import type { BreathingState, BreathingAction, BreathingConfig } from '../types/breathing';
-import { MIN_SECONDS, MAX_SECONDS } from '../types/breathing';
+import { MIN_SECONDS, MAX_SECONDS, MIN_DURATION, MAX_DURATION } from '../types/breathing';
 
 // --- Exported reducer (tested independently) ---
 export function breathingReducer(state: BreathingState, action: BreathingAction): BreathingState {
@@ -28,6 +28,11 @@ export function breathingReducer(state: BreathingState, action: BreathingAction)
     }
     case 'TOGGLE_MUSIC':
       return { ...state, musicEnabled: !state.musicEnabled };
+    case 'SET_DURATION': {
+      if (state.session === 'running') return state;
+      const value = Math.max(MIN_DURATION, Math.min(MAX_DURATION, action.value));
+      return { ...state, config: { ...state.config, duration: value } };
+    }
     default:
       return state;
   }
