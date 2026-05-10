@@ -1,5 +1,6 @@
 import { useReducer } from 'react';
 import { BreathingCircle } from './BreathingCircle';
+import { TimingControls } from './TimingControls';
 import { useBreathingAnimation, breathingReducer } from '../hooks/useBreathingAnimation';
 import { DEFAULT_CONFIG } from '../types/breathing';
 import type { BreathingState } from '../types/breathing';
@@ -30,6 +31,11 @@ export function BreathingScreen() {
       aria-label="Breathing"
       className="w-screen h-dvh flex-shrink-0 snap-start snap-always flex items-center justify-center bg-black relative"
     >
+      <TimingControls
+        config={state.config}
+        dispatch={dispatch}
+        visible={state.session === 'idle'}
+      />
       <BreathingCircle
         ref={elementRef}
         session={state.session}
