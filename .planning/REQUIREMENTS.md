@@ -24,11 +24,11 @@ Requirements for initial release. Each maps to roadmap phases.
 - [x] **BRTH-06**: White circle grows during inhale phase
 - [x] **BRTH-07**: White circle stays large during hold phase
 - [x] **BRTH-08**: White circle shrinks during exhale phase
-- [ ] **BRTH-09**: "Breathe in" audio plays at start of inhale
-- [ ] **BRTH-10**: "Hold your breath" audio plays at start of hold
-- [ ] **BRTH-11**: "Breathe out" audio plays at start of exhale
-- [ ] **BRTH-12**: Background music can be toggled on/off
-- [ ] **BRTH-13**: Screen does not lock during active session
+- [x] **BRTH-09**: "Breathe in" audio plays at start of inhale
+- [x] **BRTH-10**: "Hold your breath" audio plays at start of hold
+- [x] **BRTH-11**: "Breathe out" audio plays at start of exhale
+- [x] **BRTH-12**: Background music can be toggled on/off
+- [x] **BRTH-13**: Screen does not lock during active session
 
 **Note:** Audio files (3 voice cues + 1 background music) will be provided by user later. Placeholder/silent files acceptable during development.
 
@@ -96,11 +96,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BRTH-06 | Phase 2 | Complete |
 | BRTH-07 | Phase 2 | Complete |
 | BRTH-08 | Phase 2 | Complete |
-| BRTH-09 | Phase 3 | Pending |
-| BRTH-10 | Phase 3 | Pending |
-| BRTH-11 | Phase 3 | Pending |
-| BRTH-12 | Phase 3 | Pending |
-| BRTH-13 | Phase 4 | Pending |
+| BRTH-09 | Phase 3 | Complete |
+| BRTH-10 | Phase 3 | Complete |
+| BRTH-11 | Phase 3 | Complete |
+| BRTH-12 | Phase 3 | Complete |
+| BRTH-13 | Phase 4 | Complete |
 | SETT-01 | Phase 5 | Pending |
 | SETT-02 | Phase 5 | Pending |
 | NAV-01 | Phase 6 | Pending |
@@ -115,4 +115,4 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 ---
 *Requirements defined: 2026-05-09*
-*Last updated: 2026-05-09 after initial definition*
+*Last updated: 2026-05-10 after Phase 4 completion (BRTH-13 complete)*

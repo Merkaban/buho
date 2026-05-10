@@ -11,7 +11,7 @@
 | 1 | PWA Shell & Project Setup | Complete (3/3) | PWA-01, PWA-02, PWA-03, PWA-04 |
 | 2 | Breathing Timer & Animation | Complete (3/3) | BRTH-01, BRTH-02, BRTH-03, BRTH-04, BRTH-05, BRTH-06, BRTH-07, BRTH-08 |
 | 3 | Audio Integration | Complete (2/2) | BRTH-09, BRTH-10, BRTH-11, BRTH-12 |
-| 4 | Wake Lock & Session Polish | Screen stays awake during sessions, polished session experience | BRTH-13 |
+| 4 | Wake Lock & Session Polish | Complete (1/1) | BRTH-13 |
 | 5 | Settings & Persistence | Inline settings with localStorage persistence | SETT-01, SETT-02 |
 | 6 | Navigation & Meditation Placeholder | Swipeable two-mode layout with meditation placeholder | NAV-01, NAV-02, MEDT-01, MEDT-02 |
 
@@ -102,11 +102,11 @@ Plans:
 ### Phase 4: Wake Lock & Session Polish
 **Goal:** Screen never locks during an active breathing session on iOS
 **Mode:** mvp
-**Plans:** 1 plan
+**Plans:** 1/1 plans executed (COMPLETE)
 
 Plans:
 **Wave 1**
-- [ ] 04-01-PLAN.md — useWakeLock hook with TDD (RED then GREEN) and BreathingScreen integration
+- [x] 04-01-PLAN.md — useWakeLock hook with TDD (RED then GREEN) and BreathingScreen integration
 
 **Success Criteria:**
 1. Screen stays awake during active breathing session on iOS
@@ -157,4 +157,4 @@ Phase 1 (PWA Shell)
 
 ---
 *Created: 2026-05-09*
-*Last updated: 2026-05-10 after Phase 4 planning*
+*Last updated: 2026-05-10 after Phase 4 execution complete*
