@@ -19,9 +19,9 @@ export const BreathingCircle = forwardRef<HTMLDivElement, BreathingCircleProps>(
         tabIndex={0}
         onClick={onClick}
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') onClick(); }}
-        className={`w-12 h-12 rounded-full bg-white cursor-pointer transition-shadow duration-300 ${
+        className={`w-12 h-12 rounded-full bg-[#f5f0eb] cursor-pointer transition-shadow duration-300 ${
           isIdle
-            ? 'shadow-[0_0_20px_rgba(255,255,255,0.4)]'
+            ? 'shadow-[0_0_30px_8px_rgba(245,240,235,0.6)]'
             : 'shadow-none'
         }`}
         style={{ transformOrigin: 'center', willChange: 'transform' }}
