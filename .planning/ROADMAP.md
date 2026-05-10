@@ -10,7 +10,7 @@
 |---|-------|------|--------------|
 | 1 | PWA Shell & Project Setup | Complete (3/3) | PWA-01, PWA-02, PWA-03, PWA-04 |
 | 2 | Breathing Timer & Animation | Complete (3/3) | BRTH-01, BRTH-02, BRTH-03, BRTH-04, BRTH-05, BRTH-06, BRTH-07, BRTH-08 |
-| 3 | Audio Integration | Voice cues and background music playing in sync with breathing phases | BRTH-09, BRTH-10, BRTH-11, BRTH-12 |
+| 3 | Audio Integration | In Progress (1/2) | BRTH-09, BRTH-10, BRTH-11, BRTH-12 |
 | 4 | Wake Lock & Session Polish | Screen stays awake during sessions, polished session experience | BRTH-13 |
 | 5 | Settings & Persistence | Inline settings with localStorage persistence | SETT-01, SETT-02 |
 | 6 | Navigation & Meditation Placeholder | Swipeable two-mode layout with meditation placeholder | NAV-01, NAV-02, MEDT-01, MEDT-02 |
@@ -80,7 +80,7 @@ Plans:
 
 Plans:
 **Wave 1**
-- [ ] 03-01-PLAN.md — Install Howler.js, generate placeholder audio, extend types, create failing tests
+- [x] 03-01-PLAN.md — Install Howler.js, generate placeholder audio, extend types, create failing tests
 
 **Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 03-02-PLAN.md — Implement useBreathingAudio hook, MusicToggle component, wire into BreathingScreen
@@ -151,4 +151,4 @@ Phase 1 (PWA Shell)
 
 ---
 *Created: 2026-05-09*
-*Last updated: 2026-05-10 after Phase 03 planning*
+*Last updated: 2026-05-10 after completing 03-01 audio foundation*
