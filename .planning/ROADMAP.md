@@ -120,6 +120,15 @@ Plans:
 ### Phase 5: Settings & Persistence
 **Goal:** User can adjust breathing timing on-screen and settings survive app restarts
 **Mode:** mvp
+**Plans:** 2 plans
+
+Plans:
+**Wave 1**
+- [ ] 05-01-PLAN.md — Duration stepper, reducer extension, localStorage persistence for all settings
+
+**Wave 2** *(blocked on Wave 1 completion)*
+- [ ] 05-02-PLAN.md — Session countdown timer with auto-stop behavior
+
 **Success Criteria:**
 1. Timing controls (inhale/hold/exhale) are visible on the breathing screen
 2. Changing a setting takes effect on the next breathing cycle
@@ -157,4 +166,4 @@ Phase 1 (PWA Shell)
 
 ---
 *Created: 2026-05-09*
-*Last updated: 2026-05-10 after Phase 4 execution complete*
+*Last updated: 2026-05-10 after Phase 5 planning complete*
