@@ -14,12 +14,13 @@ export function useBreathingAudio() {
   // Create Howl instances eagerly on mount so they share the global AudioContext
   useEffect(() => {
     cuesRef.current = {
-      in: new Howl({ src: ['/audio/breathe-in.mp3'], preload: true }),
-      hold: new Howl({ src: ['/audio/hold.mp3'], preload: true }),
-      out: new Howl({ src: ['/audio/breathe-out.mp3'], preload: true }),
+      in: new Howl({ src: ['/audio/breathe-in.mp3'], html5: true, preload: true }),
+      hold: new Howl({ src: ['/audio/hold.mp3'], html5: true, preload: true }),
+      out: new Howl({ src: ['/audio/breathe-out.mp3'], html5: true, preload: true }),
     };
     musicRef.current = new Howl({
       src: ['/audio/ocean-waves.mp3'],
+      html5: true,
       loop: true,
       preload: true,
       volume: 0.4,
