@@ -11,7 +11,7 @@ describe('Service Worker / Offline Config (PWA-02)', () => {
 
   it('has globPatterns to precache static assets', () => {
     expect(viteConfig).toContain('globPatterns:');
-    expect(viteConfig).toContain('**/*.{js,css,html,ico,png,svg,woff2}');
+    expect(viteConfig).toContain('**/*.{js,css,html,ico,png,svg,woff2,mp3}');
   });
 
   it('has cleanupOutdatedCaches enabled', () => {

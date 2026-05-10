@@ -1,7 +1,9 @@
 import { useReducer } from 'react';
 import { BreathingCircle } from './BreathingCircle';
 import { TimingControls } from './TimingControls';
+import { MusicToggle } from './MusicToggle';
 import { useBreathingAnimation, breathingReducer } from '../hooks/useBreathingAnimation';
+import { useBreathingAudio } from '../hooks/useBreathingAudio';
 import { DEFAULT_CONFIG } from '../types/breathing';
 import type { BreathingState } from '../types/breathing';
 
@@ -14,15 +16,24 @@ const initialState: BreathingState = {
 export function BreathingScreen() {
   const [state, dispatch] = useReducer(breathingReducer, initialState);
   const { elementRef, start, stop } = useBreathingAnimation();
+  const { start: audioStart, stop: audioStop, toggleMusic } = useBreathingAudio();
 
   const handleCircleTap = () => {
     if (state.session === 'idle') {
       dispatch({ type: 'START' });
       start(state.config);
+      audioStart(state.config); // D-08: starts music + schedules cues, D-11: iOS unlock via gesture
     } else {
       dispatch({ type: 'STOP' });
       stop();
+      audioStop(); // D-10: cuts all audio immediately
     }
+  };
+
+  const handleMusicToggle = () => {
+    const newEnabled = !state.musicEnabled;
+    dispatch({ type: 'TOGGLE_MUSIC' });
+    toggleMusic(newEnabled); // D-03: immediate cut, D-04: mute preserves position
   };
 
   return (
@@ -41,6 +52,10 @@ export function BreathingScreen() {
         ref={elementRef}
         session={state.session}
         onClick={handleCircleTap}
+      />
+      <MusicToggle
+        enabled={state.musicEnabled}
+        onToggle={handleMusicToggle}
       />
     </div>
   );
