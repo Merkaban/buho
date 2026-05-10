@@ -15,7 +15,7 @@ export function CountdownDisplay({ remainingSeconds, visible }: CountdownDisplay
       data-testid="countdown-display"
       aria-hidden={!visible}
       aria-live={visible ? 'polite' : undefined}
-      className={`absolute top-[calc(50%+80px)] left-0 right-0 text-center text-white/60 text-sm tabular-nums transition-opacity duration-500 ${
+      className={`absolute top-[calc(50%+140px)] left-0 right-0 text-center text-white/60 text-sm tabular-nums transition-opacity duration-500 ${
         visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
     >
