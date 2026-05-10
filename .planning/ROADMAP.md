@@ -48,8 +48,20 @@ Plans:
 ### Phase 2: Breathing Timer & Animation
 **Goal:** Working breathing circle that animates smoothly through configurable inhale/hold/exhale phases with start/stop control
 **Mode:** mvp
+**Plans:** 3 plans
+
+Plans:
+**Wave 1**
+- [ ] 02-01-PLAN.md — Type contracts and failing tests (RED state for TDD)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+- [ ] 02-02-PLAN.md — Core breathing animation with tap-to-start/stop (makes tests GREEN)
+
+**Wave 3** *(blocked on Wave 2 completion)*
+- [ ] 02-03-PLAN.md — Configurable timing controls with fade behavior and visual verification
+
 **Success Criteria:**
-1. User can set inhale, hold, and exhale durations (default: 4s/4s/4s)
+1. User can set inhale, hold, and exhale durations (default: 5s/5s/5s)
 2. Tapping start begins the breathing cycle, tapping stop ends it
 3. White circle smoothly grows during inhale phase
 4. White circle holds at full size during hold phase
@@ -130,4 +142,4 @@ Phase 1 (PWA Shell)
 
 ---
 *Created: 2026-05-09*
-*Last updated: 2026-05-09 after Phase 1 planning*
+*Last updated: 2026-05-10 after Phase 2 planning*
