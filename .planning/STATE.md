@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-05-10T14:35:00.000Z"
+last_updated: "2026-05-10T14:38:00.000Z"
 progress:
   total_phases: 6
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 11
-  completed_plans: 10
-  percent: 91
+  completed_plans: 11
+  percent: 100
 ---
 
 # Project State: mindfulONE
@@ -19,7 +19,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-09)
 
 **Core value:** The breathing guide must work flawlessly — correct timing, smooth animation, audio cues in sync, and the screen must never lock during a session.
-**Current focus:** Phase 05 planned — ready to execute (Settings & Persistence)
+**Current focus:** Phase 05 complete — Phase 06 pending (Navigation & Meditation Placeholder)
 
 ## Current Status
 
@@ -29,13 +29,13 @@ See: .planning/PROJECT.md (updated 2026-05-09)
 | 2 | Breathing Timer & Animation | Complete | 100% (3/3 plans) |
 | 3 | Audio Integration | Complete | 100% (2/2 plans) |
 | 4 | Wake Lock & Session Polish | Complete | 100% (1/1 plans) |
-| 5 | Settings & Persistence | In progress | 50% (1/2 plans) |
+| 5 | Settings & Persistence | Complete | 100% (2/2 plans) |
 | 6 | Navigation & Meditation Placeholder | Pending | 0% |
 
 ## Milestone Progress
 
-Progress: [███████████████████████░░] 91%
-Plans: 10/11 complete (Phase 1: 3/3, Phase 2: 3/3, Phase 3: 2/2, Phase 4: 1/1, Phase 5: 1/2)
+Progress: [█████████████████████████] 100%
+Plans: 11/11 complete (Phase 1: 3/3, Phase 2: 3/3, Phase 3: 2/2, Phase 4: 1/1, Phase 5: 2/2)
 
 ## Decisions
 
@@ -62,6 +62,9 @@ Plans: 10/11 complete (Phase 1: 3/3, Phase 2: 3/3, Phase 3: 2/2, Phase 4: 1/1, P
 - Used macOS say command with Samantha voice for TTS placeholder generation
 - Used vi.importActual for deferred module resolution so reducer tests pass while hook tests fail (RED)
 - Brown noise with band-pass filter (100-800Hz) for ocean waves placeholder (~241KB, 15s loop)
+- useRef for onComplete callback to avoid stale closures in setInterval
+- remainingRef + setState pattern for both instant reads and React re-renders
+- CountdownDisplay renders empty string when not visible (prevents stale time flash on fade-out)
 
 ## Performance Metrics
 
@@ -77,12 +80,13 @@ Plans: 10/11 complete (Phase 1: 3/3, Phase 2: 3/3, Phase 3: 2/2, Phase 4: 1/1, P
 | 03 | 02 | 3min | 3 | 5 |
 | 04 | 01 | 2min | 2 | 3 |
 | 05 | 01 | 3min | 2 | 7 |
+| 05 | 02 | 2min | 2 | 4 |
 
 ## Last Session
 
 - **Timestamp:** 2026-05-10
-- **Completed:** 05-01-PLAN.md (Settings Persistence — duration stepper + localStorage)
-- **Resume:** Phase 05 Plan 02 (Countdown Timer)
+- **Completed:** 05-02-PLAN.md (Session Countdown Timer — auto-stop on expiry)
+- **Resume:** Phase 06 (Navigation & Meditation Placeholder)
 
 ---
-*Last updated: 2026-05-10 after completing 05-01 settings persistence*
+*Last updated: 2026-05-10 after completing 05-02 session countdown timer*
