@@ -1,17 +1,16 @@
-import { useReducer } from 'react';
+import { useReducer, useEffect } from 'react';
 import { BreathingCircle } from './BreathingCircle';
 import { TimingControls } from './TimingControls';
 import { MusicToggle } from './MusicToggle';
 import { useBreathingAnimation, breathingReducer } from '../hooks/useBreathingAnimation';
 import { useBreathingAudio } from '../hooks/useBreathingAudio';
 import { useWakeLock } from '../hooks/useWakeLock';
-import { DEFAULT_CONFIG } from '../types/breathing';
+import { loadSettings, saveSettings } from '../hooks/useSettings';
 import type { BreathingState } from '../types/breathing';
 
 const initialState: BreathingState = {
   session: 'idle',
-  config: { ...DEFAULT_CONFIG },
-  musicEnabled: true,
+  ...loadSettings(),
 };
 
 export function BreathingScreen() {
@@ -19,6 +18,13 @@ export function BreathingScreen() {
   const { elementRef, start, stop } = useBreathingAnimation();
   const { start: audioStart, stop: audioStop, toggleMusic } = useBreathingAudio();
   const { activate: wakeLockActivate, release: wakeLockRelease } = useWakeLock();
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      saveSettings(state.config, state.musicEnabled);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, [state.config, state.musicEnabled]);
 
   const handleCircleTap = () => {
     if (state.session === 'idle') {

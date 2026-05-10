@@ -1,5 +1,5 @@
 import type { BreathingConfig, BreathingAction } from '../types/breathing';
-import { MIN_SECONDS, MAX_SECONDS } from '../types/breathing';
+import { MIN_SECONDS, MAX_SECONDS, MIN_DURATION, MAX_DURATION } from '../types/breathing';
 
 interface StepperProps {
   label: string;
@@ -7,9 +7,10 @@ interface StepperProps {
   min: number;
   max: number;
   onChange: (value: number) => void;
+  suffix?: string;
 }
 
-function Stepper({ label, value, min, max, onChange }: StepperProps) {
+function Stepper({ label, value, min, max, onChange, suffix }: StepperProps) {
   return (
     <div className="flex flex-col items-center gap-1">
       <span className="text-white/60 text-xs uppercase tracking-wider">{label}</span>
@@ -22,7 +23,9 @@ function Stepper({ label, value, min, max, onChange }: StepperProps) {
         >
           −
         </button>
-        <span className="text-white text-lg w-6 text-center tabular-nums">{value}</span>
+        <span className={`text-white text-lg text-center tabular-nums ${suffix ? 'w-12' : 'w-6'}`}>
+          {value}{suffix && <span className="ml-0.5">{suffix}</span>}
+        </span>
         <button
           onClick={() => onChange(value + 1)}
           disabled={value >= max}
@@ -46,32 +49,44 @@ export function TimingControls({ config, dispatch, visible }: TimingControlsProp
   return (
     <div
       data-testid="timing-controls"
-      className={`absolute top-[15%] left-0 right-0 px-4 flex justify-center gap-4 sm:gap-8 transition-opacity duration-500 ${
+      className={`absolute top-[15%] left-0 right-0 px-4 flex flex-col items-center transition-opacity duration-500 ${
         visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
       aria-hidden={!visible}
     >
-      <Stepper
-        label="inhale"
-        value={config.inhale}
-        min={MIN_SECONDS.inhale}
-        max={MAX_SECONDS.inhale}
-        onChange={(v) => dispatch({ type: 'SET_INHALE', value: v })}
-      />
-      <Stepper
-        label="hold"
-        value={config.hold}
-        min={MIN_SECONDS.hold}
-        max={MAX_SECONDS.hold}
-        onChange={(v) => dispatch({ type: 'SET_HOLD', value: v })}
-      />
-      <Stepper
-        label="exhale"
-        value={config.exhale}
-        min={MIN_SECONDS.exhale}
-        max={MAX_SECONDS.exhale}
-        onChange={(v) => dispatch({ type: 'SET_EXHALE', value: v })}
-      />
+      <div className="flex justify-center gap-4 sm:gap-8">
+        <Stepper
+          label="inhale"
+          value={config.inhale}
+          min={MIN_SECONDS.inhale}
+          max={MAX_SECONDS.inhale}
+          onChange={(v) => dispatch({ type: 'SET_INHALE', value: v })}
+        />
+        <Stepper
+          label="hold"
+          value={config.hold}
+          min={MIN_SECONDS.hold}
+          max={MAX_SECONDS.hold}
+          onChange={(v) => dispatch({ type: 'SET_HOLD', value: v })}
+        />
+        <Stepper
+          label="exhale"
+          value={config.exhale}
+          min={MIN_SECONDS.exhale}
+          max={MAX_SECONDS.exhale}
+          onChange={(v) => dispatch({ type: 'SET_EXHALE', value: v })}
+        />
+      </div>
+      <div className="mt-8 flex justify-center">
+        <Stepper
+          label="duration"
+          value={config.duration}
+          min={MIN_DURATION}
+          max={MAX_DURATION}
+          onChange={(v) => dispatch({ type: 'SET_DURATION', value: v })}
+          suffix="min"
+        />
+      </div>
     </div>
   );
 }
