@@ -4,6 +4,7 @@ import { TimingControls } from './TimingControls';
 import { MusicToggle } from './MusicToggle';
 import { useBreathingAnimation, breathingReducer } from '../hooks/useBreathingAnimation';
 import { useBreathingAudio } from '../hooks/useBreathingAudio';
+import { useWakeLock } from '../hooks/useWakeLock';
 import { DEFAULT_CONFIG } from '../types/breathing';
 import type { BreathingState } from '../types/breathing';
 
@@ -17,16 +18,19 @@ export function BreathingScreen() {
   const [state, dispatch] = useReducer(breathingReducer, initialState);
   const { elementRef, start, stop } = useBreathingAnimation();
   const { start: audioStart, stop: audioStop, toggleMusic } = useBreathingAudio();
+  const { activate: wakeLockActivate, release: wakeLockRelease } = useWakeLock();
 
   const handleCircleTap = () => {
     if (state.session === 'idle') {
       dispatch({ type: 'START' });
       start(state.config);
       audioStart(state.config); // D-08: starts music + schedules cues, D-11: iOS unlock via gesture
+      wakeLockActivate();
     } else {
       dispatch({ type: 'STOP' });
       stop();
       audioStop(); // D-10: cuts all audio immediately
+      wakeLockRelease();
     }
   };
 
