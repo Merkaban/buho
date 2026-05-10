@@ -1,7 +1,7 @@
 <!-- GSD:project-start source:PROJECT.md -->
 ## Project
 
-**mindfulONE**
+**búho**
 
 A progressive web app for guided meditation, designed to run on iOS without the App Store. It provides guided breathing exercises with configurable timing, audio cues, and a meditative visual animation — plus a future guided meditation mode accessible via swipe navigation.
 
