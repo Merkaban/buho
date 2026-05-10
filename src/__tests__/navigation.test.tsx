@@ -21,9 +21,9 @@ describe('Navigation Structure (D-04, D-06)', () => {
     expect(dots.length).toBe(3);
   });
 
-  it('renders landing screen with app name mindfulONE', () => {
+  it('renders landing screen with app name búho', () => {
     render(<App />);
-    expect(screen.getByText('mindfulONE')).toBeDefined();
+    expect(screen.getByText('búho')).toBeDefined();
   });
 
   it('renders breathing screen with static white circle (D-14)', () => {

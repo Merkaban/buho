@@ -8,7 +8,7 @@ export function LandingScreen() {
       {/* Logo placeholder slot: 64x64, invisible when no image per UI-SPEC */}
       <div className="w-16 h-16 mb-12" aria-hidden="true" />
       <h1 className="text-[32px] font-extralight leading-tight text-white">
-        mindfulONE
+        búho
       </h1>
     </div>
   );

@@ -1,7 +1,7 @@
 import type { BreathingConfig } from '../types/breathing';
 import { DEFAULT_CONFIG, MIN_SECONDS, MAX_SECONDS, MIN_DURATION, MAX_DURATION } from '../types/breathing';
 
-const STORAGE_KEY = 'mindfulone-settings';
+const STORAGE_KEY = 'buho-settings';
 
 interface PersistedSettings {
   config: BreathingConfig;

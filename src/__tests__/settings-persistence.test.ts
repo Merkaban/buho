@@ -59,7 +59,7 @@ describe('Settings persistence (SETT-02)', () => {
         config: { inhale: 3, hold: 2, exhale: 4, duration: 15 },
         musicEnabled: false,
       };
-      localStorage.setItem('mindfulone-settings', JSON.stringify(stored));
+      localStorage.setItem('buho-settings', JSON.stringify(stored));
       const result = loadSettings();
       expect(result.config.inhale).toBe(3);
       expect(result.config.hold).toBe(2);
@@ -69,7 +69,7 @@ describe('Settings persistence (SETT-02)', () => {
     });
 
     it('returns DEFAULT when localStorage has corrupt JSON', () => {
-      localStorage.setItem('mindfulone-settings', 'not-json{{{');
+      localStorage.setItem('buho-settings', 'not-json{{{');
       const result = loadSettings();
       expect(result.config).toEqual(DEFAULT_CONFIG);
       expect(result.musicEnabled).toBe(true);
@@ -77,10 +77,10 @@ describe('Settings persistence (SETT-02)', () => {
   });
 
   describe('saveSettings', () => {
-    it('writes JSON to localStorage under key "mindfulone-settings"', () => {
+    it('writes JSON to localStorage under key "buho-settings"', () => {
       const config = { inhale: 4, hold: 3, exhale: 6, duration: 10 };
       saveSettings(config, false);
-      const stored = localStorage.getItem('mindfulone-settings');
+      const stored = localStorage.getItem('buho-settings');
       expect(stored).not.toBeNull();
       const parsed = JSON.parse(stored!);
       expect(parsed.config).toEqual(config);
@@ -90,7 +90,7 @@ describe('Settings persistence (SETT-02)', () => {
     it('includes config.duration and musicEnabled in stored JSON', () => {
       const config = { inhale: 5, hold: 5, exhale: 5, duration: 20 };
       saveSettings(config, true);
-      const stored = localStorage.getItem('mindfulone-settings');
+      const stored = localStorage.getItem('buho-settings');
       const parsed = JSON.parse(stored!);
       expect(parsed.config.duration).toBe(20);
       expect(parsed.musicEnabled).toBe(true);

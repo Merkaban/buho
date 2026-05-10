@@ -6,8 +6,8 @@ import { resolve } from 'path';
 const viteConfig = readFileSync(resolve(__dirname, '../../vite.config.ts'), 'utf-8');
 
 describe('PWA Manifest (PWA-01, PWA-03)', () => {
-  it('has name set to mindfulONE', () => {
-    expect(viteConfig).toContain("name: 'mindfulONE'");
+  it('has name set to búho', () => {
+    expect(viteConfig).toContain("name: 'búho'");
   });
 
   it('has short_name set to buho', () => {

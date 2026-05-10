@@ -11,7 +11,7 @@ export default defineConfig({
       registerType: 'autoUpdate',
       includeAssets: ['favicon.ico', 'apple-touch-icon.png'],
       manifest: {
-        name: 'mindfulONE',
+        name: 'búho',
         short_name: 'buho',
         description: 'Guided breathing and meditation',
         theme_color: '#000000',
