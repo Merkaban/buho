@@ -46,7 +46,7 @@ export function TimingControls({ config, dispatch, visible }: TimingControlsProp
   return (
     <div
       data-testid="timing-controls"
-      className={`absolute top-[15%] left-0 right-0 flex justify-center gap-8 transition-opacity duration-500 ${
+      className={`absolute top-[15%] left-0 right-0 px-4 flex justify-center gap-4 sm:gap-8 transition-opacity duration-500 ${
         visible ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
       aria-hidden={!visible}

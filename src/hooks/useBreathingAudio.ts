@@ -1,5 +1,5 @@
 import { useRef, useCallback, useEffect } from 'react';
-import { Howl } from 'howler';
+import { Howl, Howler } from 'howler';
 import type { BreathingConfig } from '../types/breathing';
 
 const INITIAL_DELAY_MS = 800; // D-09: brief pause before first cue
@@ -65,6 +65,12 @@ export function useBreathingAudio() {
   const start = useCallback((config: BreathingConfig) => {
     ensureLoaded();
     runningRef.current = true;
+
+    // iOS requires AudioContext resume within user gesture
+    const ctx = Howler.ctx;
+    if (ctx && ctx.state === 'suspended') {
+      ctx.resume();
+    }
 
     // Start background music if enabled (D-08)
     if (musicEnabledRef.current && musicRef.current) {

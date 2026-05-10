@@ -9,7 +9,7 @@ export function MusicToggle({ enabled, onToggle }: MusicToggleProps) {
       onClick={onToggle}
       aria-label={enabled ? 'Mute background music' : 'Unmute background music'}
       aria-pressed={enabled}
-      className="absolute bottom-8 right-8 w-10 h-10 flex items-center justify-center text-white/70 active:text-white transition-colors"
+      className="absolute bottom-[calc(2rem+env(safe-area-inset-bottom))] right-8 w-10 h-10 flex items-center justify-center text-white/70 active:text-white transition-colors"
     >
       {enabled ? (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
