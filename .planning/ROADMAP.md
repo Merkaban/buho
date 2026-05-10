@@ -76,6 +76,15 @@ Plans:
 ### Phase 3: Audio Integration
 **Goal:** Voice cues and background music play in sync with breathing phases, working correctly on iOS
 **Mode:** mvp
+**Plans:** 2 plans
+
+Plans:
+**Wave 1**
+- [ ] 03-01-PLAN.md — Install Howler.js, generate placeholder audio, extend types, create failing tests
+
+**Wave 2** *(blocked on Wave 1 completion)*
+- [ ] 03-02-PLAN.md — Implement useBreathingAudio hook, MusicToggle component, wire into BreathingScreen
+
 **Success Criteria:**
 1. "Breathe in" audio plays at the start of each inhale phase
 2. "Hold your breath" audio plays at the start of each hold phase
@@ -142,4 +151,4 @@ Phase 1 (PWA Shell)
 
 ---
 *Created: 2026-05-09*
-*Last updated: 2026-05-10 after Plan 02-03 completion*
+*Last updated: 2026-05-10 after Phase 03 planning*
