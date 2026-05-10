@@ -1,4 +1,4 @@
-import { useReducer, useEffect, useCallback } from 'react';
+import { useReducer, useEffect, useCallback, useRef } from 'react';
 import { BreathingCircle } from './BreathingCircle';
 import { TimingControls } from './TimingControls';
 import { CountdownDisplay } from './CountdownDisplay';
@@ -30,7 +30,13 @@ export function BreathingScreen() {
 
   const { remaining, start: timerStart, clear: timerClear } = useSessionTimer(handleAutoStop);
 
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
     const timer = setTimeout(() => {
       saveSettings(state.config, state.musicEnabled);
     }, 500);
