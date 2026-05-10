@@ -12,7 +12,7 @@
 | 2 | Breathing Timer & Animation | Complete (3/3) | BRTH-01, BRTH-02, BRTH-03, BRTH-04, BRTH-05, BRTH-06, BRTH-07, BRTH-08 |
 | 3 | Audio Integration | Complete (2/2) | BRTH-09, BRTH-10, BRTH-11, BRTH-12 |
 | 4 | Wake Lock & Session Polish | Complete (1/1) | BRTH-13 |
-| 5 | Settings & Persistence | Inline settings with localStorage persistence | SETT-01, SETT-02 |
+| 5 | Settings & Persistence | In progress (1/2) | SETT-01, SETT-02 |
 | 6 | Navigation & Meditation Placeholder | Swipeable two-mode layout with meditation placeholder | NAV-01, NAV-02, MEDT-01, MEDT-02 |
 
 ---
@@ -124,7 +124,7 @@ Plans:
 
 Plans:
 **Wave 1**
-- [ ] 05-01-PLAN.md — Duration stepper, reducer extension, localStorage persistence for all settings
+- [x] 05-01-PLAN.md — Duration stepper, reducer extension, localStorage persistence for all settings
 
 **Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 05-02-PLAN.md — Session countdown timer with auto-stop behavior
@@ -166,4 +166,4 @@ Phase 1 (PWA Shell)
 
 ---
 *Created: 2026-05-09*
-*Last updated: 2026-05-10 after Phase 5 planning complete*
+*Last updated: 2026-05-10 after completing 05-01 settings persistence*
