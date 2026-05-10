@@ -50,9 +50,12 @@ export function useBreathingAnimation() {
     if (!el || !runningRef.current || !configRef.current) return;
 
     const { inhale, hold, exhale } = configRef.current;
-    const totalMs = (inhale + hold + exhale) * 1000;
-    const inhaleEnd = inhale / (inhale + hold + exhale);
-    const holdEnd = inhaleEnd + hold / (inhale + hold + exhale);
+    const total = inhale + hold + exhale;
+    if (total <= 0) return; // Guard: no-op if config is invalid
+
+    const totalMs = total * 1000;
+    const inhaleEnd = inhale / total;
+    const holdEnd = inhaleEnd + hold / total;
 
     const maxScale = 220 / 48; // ~4.583 per D-01
 
