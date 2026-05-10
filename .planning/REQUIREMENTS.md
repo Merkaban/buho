@@ -16,14 +16,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Breathing
 
-- [ ] **BRTH-01**: User can configure inhale duration in seconds
-- [ ] **BRTH-02**: User can configure hold duration in seconds
-- [ ] **BRTH-03**: User can configure exhale duration in seconds
-- [ ] **BRTH-04**: User can start a breathing session with a single tap
-- [ ] **BRTH-05**: User can stop a breathing session with a single tap
-- [ ] **BRTH-06**: White circle grows during inhale phase
-- [ ] **BRTH-07**: White circle stays large during hold phase
-- [ ] **BRTH-08**: White circle shrinks during exhale phase
+- [x] **BRTH-01**: User can configure inhale duration in seconds
+- [x] **BRTH-02**: User can configure hold duration in seconds
+- [x] **BRTH-03**: User can configure exhale duration in seconds
+- [x] **BRTH-04**: User can start a breathing session with a single tap
+- [x] **BRTH-05**: User can stop a breathing session with a single tap
+- [x] **BRTH-06**: White circle grows during inhale phase
+- [x] **BRTH-07**: White circle stays large during hold phase
+- [x] **BRTH-08**: White circle shrinks during exhale phase
 - [ ] **BRTH-09**: "Breathe in" audio plays at start of inhale
 - [ ] **BRTH-10**: "Hold your breath" audio plays at start of hold
 - [ ] **BRTH-11**: "Breathe out" audio plays at start of exhale
@@ -88,14 +88,14 @@ Which phases cover which requirements. Updated during roadmap creation.
 | PWA-02 | Phase 1 | Complete |
 | PWA-03 | Phase 1 | Complete |
 | PWA-04 | Phase 1 | Complete |
-| BRTH-01 | Phase 2 | Pending |
-| BRTH-02 | Phase 2 | Pending |
-| BRTH-03 | Phase 2 | Pending |
-| BRTH-04 | Phase 2 | Pending |
-| BRTH-05 | Phase 2 | Pending |
-| BRTH-06 | Phase 2 | Pending |
-| BRTH-07 | Phase 2 | Pending |
-| BRTH-08 | Phase 2 | Pending |
+| BRTH-01 | Phase 2 | Complete |
+| BRTH-02 | Phase 2 | Complete |
+| BRTH-03 | Phase 2 | Complete |
+| BRTH-04 | Phase 2 | Complete |
+| BRTH-05 | Phase 2 | Complete |
+| BRTH-06 | Phase 2 | Complete |
+| BRTH-07 | Phase 2 | Complete |
+| BRTH-08 | Phase 2 | Complete |
 | BRTH-09 | Phase 3 | Pending |
 | BRTH-10 | Phase 3 | Pending |
 | BRTH-11 | Phase 3 | Pending |

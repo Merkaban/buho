@@ -9,7 +9,7 @@
 | # | Phase | Goal | Requirements |
 |---|-------|------|--------------|
 | 1 | PWA Shell & Project Setup | Complete (3/3) | PWA-01, PWA-02, PWA-03, PWA-04 |
-| 2 | Breathing Timer & Animation | Working breathing circle that animates through inhale/hold/exhale cycle | BRTH-01, BRTH-02, BRTH-03, BRTH-04, BRTH-05, BRTH-06, BRTH-07, BRTH-08 |
+| 2 | 1/3 | In Progress|  |
 | 3 | Audio Integration | Voice cues and background music playing in sync with breathing phases | BRTH-09, BRTH-10, BRTH-11, BRTH-12 |
 | 4 | Wake Lock & Session Polish | Screen stays awake during sessions, polished session experience | BRTH-13 |
 | 5 | Settings & Persistence | Inline settings with localStorage persistence | SETT-01, SETT-02 |
@@ -48,11 +48,11 @@ Plans:
 ### Phase 2: Breathing Timer & Animation
 **Goal:** Working breathing circle that animates smoothly through configurable inhale/hold/exhale phases with start/stop control
 **Mode:** mvp
-**Plans:** 3 plans
+**Plans:** 1/3 plans executed
 
 Plans:
 **Wave 1**
-- [ ] 02-01-PLAN.md — Type contracts and failing tests (RED state for TDD)
+- [x] 02-01-PLAN.md — Type contracts and failing tests (RED state for TDD)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 02-02-PLAN.md — Core breathing animation with tap-to-start/stop (makes tests GREEN)
