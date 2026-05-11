@@ -54,7 +54,7 @@ export function TimingControls({ config, dispatch, visible }: TimingControlsProp
       }`}
       aria-hidden={!visible}
     >
-      <div className="flex justify-center gap-3 sm:gap-6">
+      <div className="flex justify-center gap-6 sm:gap-10">
         <Stepper
           label="inhale"
           value={config.inhale}
@@ -63,18 +63,20 @@ export function TimingControls({ config, dispatch, visible }: TimingControlsProp
           onChange={(v) => dispatch({ type: 'SET_INHALE', value: v })}
         />
         <Stepper
-          label="hold in"
-          value={config.holdIn}
-          min={MIN_SECONDS.holdIn}
-          max={MAX_SECONDS.holdIn}
-          onChange={(v) => dispatch({ type: 'SET_HOLD_IN', value: v })}
-        />
-        <Stepper
           label="exhale"
           value={config.exhale}
           min={MIN_SECONDS.exhale}
           max={MAX_SECONDS.exhale}
           onChange={(v) => dispatch({ type: 'SET_EXHALE', value: v })}
+        />
+      </div>
+      <div className="mt-4 flex justify-center gap-6 sm:gap-10">
+        <Stepper
+          label="hold in"
+          value={config.holdIn}
+          min={MIN_SECONDS.holdIn}
+          max={MAX_SECONDS.holdIn}
+          onChange={(v) => dispatch({ type: 'SET_HOLD_IN', value: v })}
         />
         <Stepper
           label="hold out"
@@ -84,7 +86,7 @@ export function TimingControls({ config, dispatch, visible }: TimingControlsProp
           onChange={(v) => dispatch({ type: 'SET_HOLD_OUT', value: v })}
         />
       </div>
-      <div className="mt-8 flex justify-center">
+      <div className="mt-6 flex justify-center">
         <Stepper
           label="duration"
           value={config.duration}
