@@ -5,8 +5,7 @@ export function LandingScreen() {
       aria-label="Landing"
       className="w-screen h-dvh flex-shrink-0 snap-start snap-always flex flex-col items-center justify-center bg-[#5f7d60]"
     >
-      {/* Logo placeholder slot: 64x64, invisible when no image per UI-SPEC */}
-      <div className="w-16 h-16 mb-12" aria-hidden="true" />
+      <img src="/logo.jpg" alt="búho logo" className="w-40 h-40 rounded-2xl mb-8" />
       <h1 className="text-[32px] font-extralight leading-tight text-white">
         búho
       </h1>
