@@ -79,7 +79,7 @@ describe('Settings persistence (SETT-02)', () => {
 
   describe('saveSettings', () => {
     it('writes JSON to localStorage under key "buho-settings"', () => {
-      const config = { inhale: 4, hold: 3, exhale: 6, duration: 10 };
+      const config = { inhale: 4, holdIn: 3, exhale: 6, holdOut: 2, duration: 10 };
       saveSettings(config, false);
       const stored = localStorage.getItem('buho-settings');
       expect(stored).not.toBeNull();
@@ -89,7 +89,7 @@ describe('Settings persistence (SETT-02)', () => {
     });
 
     it('includes config.duration and musicEnabled in stored JSON', () => {
-      const config = { inhale: 5, hold: 5, exhale: 5, duration: 20 };
+      const config = { inhale: 5, holdIn: 5, exhale: 5, holdOut: 0, duration: 20 };
       saveSettings(config, true);
       const stored = localStorage.getItem('buho-settings');
       const parsed = JSON.parse(stored!);

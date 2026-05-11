@@ -80,6 +80,29 @@ describe('Breathing State Reducer (BRTH-01, BRTH-02, BRTH-03, BRTH-04, BRTH-05)'
     });
   });
 
+  describe('hold-out configuration', () => {
+    it('SET_HOLD_OUT updates holdOut duration', () => {
+      const result = breathingReducer(initialState, { type: 'SET_HOLD_OUT', value: 7 });
+      expect(result.config.holdOut).toBe(7);
+    });
+
+    it('SET_HOLD_OUT allows 0 to skip hold-out phase', () => {
+      const result = breathingReducer(initialState, { type: 'SET_HOLD_OUT', value: 0 });
+      expect(result.config.holdOut).toBe(0);
+    });
+
+    it('SET_HOLD_OUT is ignored while running', () => {
+      const running: BreathingState = { ...initialState, session: 'running' };
+      const result = breathingReducer(running, { type: 'SET_HOLD_OUT', value: 3 });
+      expect(result.config.holdOut).toBe(0);
+    });
+
+    it('SET_HOLD_OUT clamps to maximum 60', () => {
+      const result = breathingReducer(initialState, { type: 'SET_HOLD_OUT', value: 99 });
+      expect(result.config.holdOut).toBe(60);
+    });
+  });
+
   describe('exhale configuration (BRTH-03)', () => {
     it('SET_EXHALE updates exhale duration', () => {
       const result = breathingReducer(initialState, { type: 'SET_EXHALE', value: 6 });

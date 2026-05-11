@@ -140,6 +140,42 @@ describe('Breathing Audio - Voice Cues (BRTH-09, BRTH-10, BRTH-11)', () => {
 
     act(() => { result.current.stop(); });
   });
+
+  it('hold cue is skipped when holdIn=1 (too short for cue)', async () => {
+    const { useBreathingAudio } = await import('../hooks/useBreathingAudio');
+    const { result } = renderHook(() => useBreathingAudio());
+
+    act(() => {
+      mockPlay.mockClear();
+      result.current.start({ inhale: 4, holdIn: 1, exhale: 4, holdOut: 0, duration: 5 });
+    });
+
+    // Advance through full first cycle: 800ms + (4+1+4)*1000 = 9800ms
+    act(() => { vi.advanceTimersByTime(9800); });
+
+    // holdIn=1 is too short for a cue: music.play(), breathe-in.play(), breathe-out.play() = 3
+    expect(mockPlay.mock.calls.length).toBe(3);
+
+    act(() => { result.current.stop(); });
+  });
+
+  it('hold cue plays for holdOut when holdOut > 1', async () => {
+    const { useBreathingAudio } = await import('../hooks/useBreathingAudio');
+    const { result } = renderHook(() => useBreathingAudio());
+
+    act(() => {
+      mockPlay.mockClear();
+      result.current.start({ inhale: 4, holdIn: 0, exhale: 4, holdOut: 3, duration: 5 });
+    });
+
+    // Advance through full first cycle: 800ms + (4+0+4+3)*1000 = 11800ms
+    act(() => { vi.advanceTimersByTime(11800); });
+
+    // music.play(), breathe-in.play(), breathe-out.play(), hold.play() (for holdOut) = 4
+    expect(mockPlay.mock.calls.length).toBe(4);
+
+    act(() => { result.current.stop(); });
+  });
 });
 
 describe('Breathing Audio - Music Toggle (BRTH-12)', () => {
