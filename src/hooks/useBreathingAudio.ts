@@ -19,7 +19,7 @@ export function useBreathingAudio() {
       out: new Howl({ src: ['/audio/breathe-out.mp3'], html5: true, preload: true }),
     };
     musicRef.current = new Howl({
-      src: ['/audio/ocean-waves.mp3'],
+      src: ['/audio/meditation.mp3'],
       html5: true,
       loop: true,
       preload: true,
