@@ -58,25 +58,25 @@ describe('Breathing State Reducer (BRTH-01, BRTH-02, BRTH-03, BRTH-04, BRTH-05)'
   });
 
   describe('hold configuration (BRTH-02)', () => {
-    it('SET_HOLD updates hold duration', () => {
-      const result = breathingReducer(initialState, { type: 'SET_HOLD', value: 7 });
-      expect(result.config.hold).toBe(7);
+    it('SET_HOLD_IN updates holdIn duration', () => {
+      const result = breathingReducer(initialState, { type: 'SET_HOLD_IN', value: 7 });
+      expect(result.config.holdIn).toBe(7);
     });
 
-    it('SET_HOLD allows 0 to skip hold phase (D-07)', () => {
-      const result = breathingReducer(initialState, { type: 'SET_HOLD', value: 0 });
-      expect(result.config.hold).toBe(0);
+    it('SET_HOLD_IN allows 0 to skip hold phase (D-07)', () => {
+      const result = breathingReducer(initialState, { type: 'SET_HOLD_IN', value: 0 });
+      expect(result.config.holdIn).toBe(0);
     });
 
-    it('SET_HOLD is ignored while running', () => {
+    it('SET_HOLD_IN is ignored while running', () => {
       const running: BreathingState = { ...initialState, session: 'running' };
-      const result = breathingReducer(running, { type: 'SET_HOLD', value: 3 });
-      expect(result.config.hold).toBe(5);
+      const result = breathingReducer(running, { type: 'SET_HOLD_IN', value: 3 });
+      expect(result.config.holdIn).toBe(5);
     });
 
-    it('SET_HOLD clamps to maximum 60', () => {
-      const result = breathingReducer(initialState, { type: 'SET_HOLD', value: 99 });
-      expect(result.config.hold).toBe(60);
+    it('SET_HOLD_IN clamps to maximum 60', () => {
+      const result = breathingReducer(initialState, { type: 'SET_HOLD_IN', value: 99 });
+      expect(result.config.holdIn).toBe(60);
     });
   });
 

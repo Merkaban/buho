@@ -11,8 +11,9 @@ interface PersistedSettings {
 function clampConfig(raw: Partial<BreathingConfig>): BreathingConfig {
   return {
     inhale: Math.max(MIN_SECONDS.inhale, Math.min(MAX_SECONDS.inhale, raw.inhale ?? DEFAULT_CONFIG.inhale)),
-    hold: Math.max(MIN_SECONDS.hold, Math.min(MAX_SECONDS.hold, raw.hold ?? DEFAULT_CONFIG.hold)),
+    holdIn: Math.max(MIN_SECONDS.holdIn, Math.min(MAX_SECONDS.holdIn, raw.holdIn ?? DEFAULT_CONFIG.holdIn)),
     exhale: Math.max(MIN_SECONDS.exhale, Math.min(MAX_SECONDS.exhale, raw.exhale ?? DEFAULT_CONFIG.exhale)),
+    holdOut: Math.max(MIN_SECONDS.holdOut, Math.min(MAX_SECONDS.holdOut, raw.holdOut ?? DEFAULT_CONFIG.holdOut)),
     duration: Math.max(MIN_DURATION, Math.min(MAX_DURATION, raw.duration ?? DEFAULT_CONFIG.duration)),
   };
 }

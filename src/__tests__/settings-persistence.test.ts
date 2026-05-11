@@ -56,14 +56,15 @@ describe('Settings persistence (SETT-02)', () => {
 
     it('returns parsed values when localStorage has valid JSON', () => {
       const stored = {
-        config: { inhale: 3, hold: 2, exhale: 4, duration: 15 },
+        config: { inhale: 3, holdIn: 2, exhale: 4, holdOut: 3, duration: 15 },
         musicEnabled: false,
       };
       localStorage.setItem('buho-settings', JSON.stringify(stored));
       const result = loadSettings();
       expect(result.config.inhale).toBe(3);
-      expect(result.config.hold).toBe(2);
+      expect(result.config.holdIn).toBe(2);
       expect(result.config.exhale).toBe(4);
+      expect(result.config.holdOut).toBe(3);
       expect(result.config.duration).toBe(15);
       expect(result.musicEnabled).toBe(false);
     });

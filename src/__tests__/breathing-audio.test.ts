@@ -71,7 +71,7 @@ describe('Breathing Audio - Voice Cues (BRTH-09, BRTH-10, BRTH-11)', () => {
     const { result } = renderHook(() => useBreathingAudio());
 
     act(() => {
-      result.current.start({ inhale: 4, hold: 4, exhale: 4 });
+      result.current.start({ inhale: 4, holdIn: 4, exhale: 4, holdOut: 0, duration: 5 });
     });
 
     // Before 800ms -- no cue yet
@@ -92,7 +92,7 @@ describe('Breathing Audio - Voice Cues (BRTH-09, BRTH-10, BRTH-11)', () => {
 
     act(() => {
       mockPlay.mockClear();
-      result.current.start({ inhale: 4, hold: 4, exhale: 4 });
+      result.current.start({ inhale: 4, holdIn: 4, exhale: 4, holdOut: 0, duration: 5 });
     });
 
     // Advance to 800ms (breathe in) + 4000ms (inhale duration) = 4800ms
@@ -110,7 +110,7 @@ describe('Breathing Audio - Voice Cues (BRTH-09, BRTH-10, BRTH-11)', () => {
 
     act(() => {
       mockPlay.mockClear();
-      result.current.start({ inhale: 4, hold: 4, exhale: 4 });
+      result.current.start({ inhale: 4, holdIn: 4, exhale: 4, holdOut: 0, duration: 5 });
     });
 
     // Advance to 800ms + (inhale + hold) * 1000 = 800 + 8000 = 8800ms
@@ -122,13 +122,13 @@ describe('Breathing Audio - Voice Cues (BRTH-09, BRTH-10, BRTH-11)', () => {
     act(() => { result.current.stop(); });
   });
 
-  it('hold cue is skipped when hold=0 (Pitfall 4)', async () => {
+  it('hold cue is skipped when holdIn=0 (Pitfall 4)', async () => {
     const { useBreathingAudio } = await import('../hooks/useBreathingAudio');
     const { result } = renderHook(() => useBreathingAudio());
 
     act(() => {
       mockPlay.mockClear();
-      result.current.start({ inhale: 4, hold: 0, exhale: 4 });
+      result.current.start({ inhale: 4, holdIn: 0, exhale: 4, holdOut: 0, duration: 5 });
     });
 
     // Advance through full first cycle: 800ms + (4+0+4)*1000 = 8800ms
@@ -160,7 +160,7 @@ describe('Breathing Audio - Music Toggle (BRTH-12)', () => {
     const { result } = renderHook(() => useBreathingAudio());
 
     act(() => {
-      result.current.start({ inhale: 4, hold: 4, exhale: 4 });
+      result.current.start({ inhale: 4, holdIn: 4, exhale: 4, holdOut: 0, duration: 5 });
     });
 
     act(() => {
@@ -180,7 +180,7 @@ describe('Breathing Audio - Music Toggle (BRTH-12)', () => {
     const { result } = renderHook(() => useBreathingAudio());
 
     act(() => {
-      result.current.start({ inhale: 4, hold: 4, exhale: 4 });
+      result.current.start({ inhale: 4, holdIn: 4, exhale: 4, holdOut: 0, duration: 5 });
     });
 
     act(() => {
@@ -203,7 +203,7 @@ describe('Breathing Audio - Music Toggle (BRTH-12)', () => {
     const { result } = renderHook(() => useBreathingAudio());
 
     act(() => {
-      result.current.start({ inhale: 4, hold: 4, exhale: 4 });
+      result.current.start({ inhale: 4, holdIn: 4, exhale: 4, holdOut: 0, duration: 5 });
     });
 
     act(() => {

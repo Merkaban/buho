@@ -16,10 +16,15 @@ export function breathingReducer(state: BreathingState, action: BreathingAction)
       const value = Math.max(MIN_SECONDS.inhale, Math.min(MAX_SECONDS.inhale, action.value));
       return { ...state, config: { ...state.config, inhale: value } };
     }
-    case 'SET_HOLD': {
+    case 'SET_HOLD_IN': {
       if (state.session === 'running') return state;
-      const value = Math.max(MIN_SECONDS.hold, Math.min(MAX_SECONDS.hold, action.value));
-      return { ...state, config: { ...state.config, hold: value } };
+      const value = Math.max(MIN_SECONDS.holdIn, Math.min(MAX_SECONDS.holdIn, action.value));
+      return { ...state, config: { ...state.config, holdIn: value } };
+    }
+    case 'SET_HOLD_OUT': {
+      if (state.session === 'running') return state;
+      const value = Math.max(MIN_SECONDS.holdOut, Math.min(MAX_SECONDS.holdOut, action.value));
+      return { ...state, config: { ...state.config, holdOut: value } };
     }
     case 'SET_EXHALE': {
       if (state.session === 'running') return state;
@@ -49,29 +54,33 @@ export function useBreathingAnimation() {
     const el = elementRef.current;
     if (!el || !runningRef.current || !configRef.current) return;
 
-    const { inhale, hold, exhale } = configRef.current;
-    const total = inhale + hold + exhale;
-    if (total <= 0) return; // Guard: no-op if config is invalid
+    const { inhale, holdIn, exhale, holdOut } = configRef.current;
+    const total = inhale + holdIn + exhale + holdOut;
+    if (total <= 0) return;
 
     const totalMs = total * 1000;
+    const maxScale = 220 / 48;
+
+    const keyframes: Keyframe[] = [
+      { transform: 'scale(1)', offset: 0, easing: 'ease-in-out' },
+    ];
+
     const inhaleEnd = inhale / total;
-    const holdEnd = inhaleEnd + hold / total;
+    keyframes.push({ transform: `scale(${maxScale})`, offset: inhaleEnd, easing: holdIn > 0 ? 'linear' : 'ease-in-out' });
 
-    const maxScale = 220 / 48; // ~4.583 per D-01
+    if (holdIn > 0) {
+      const holdInEnd = (inhale + holdIn) / total;
+      keyframes.push({ transform: `scale(${maxScale})`, offset: holdInEnd, easing: 'ease-in-out' });
+    }
 
-    // Build keyframes — skip hold keyframe when hold=0 per D-07
-    const keyframes: Keyframe[] = hold > 0
-      ? [
-          { transform: 'scale(1)', offset: 0, easing: 'ease-in-out' },
-          { transform: `scale(${maxScale})`, offset: inhaleEnd, easing: 'linear' },
-          { transform: `scale(${maxScale})`, offset: holdEnd, easing: 'ease-in-out' },
-          { transform: 'scale(1)', offset: 1 },
-        ]
-      : [
-          { transform: 'scale(1)', offset: 0, easing: 'ease-in-out' },
-          { transform: `scale(${maxScale})`, offset: inhaleEnd, easing: 'ease-in-out' },
-          { transform: 'scale(1)', offset: 1 },
-        ];
+    const exhaleEnd = (inhale + holdIn + exhale) / total;
+    keyframes.push({ transform: 'scale(1)', offset: exhaleEnd, easing: holdOut > 0 ? 'linear' : 'ease-in-out' });
+
+    if (holdOut > 0) {
+      keyframes.push({ transform: 'scale(1)', offset: 1 });
+    } else {
+      keyframes[keyframes.length - 1].offset = 1;
+    }
 
     const anim = el.animate(keyframes, {
       duration: totalMs,

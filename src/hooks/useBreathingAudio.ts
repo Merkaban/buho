@@ -37,15 +37,15 @@ export function useBreathingAudio() {
   const scheduleCycle = useCallback((config: BreathingConfig, delay: number) => {
     if (!runningRef.current || !cuesRef.current) return;
 
-    const { inhale, hold, exhale } = config;
-    const totalMs = (inhale + hold + exhale) * 1000;
+    const { inhale, holdIn, exhale, holdOut } = config;
+    const totalMs = (inhale + holdIn + exhale + holdOut) * 1000;
 
     const t1 = window.setTimeout(() => {
       if (runningRef.current) cuesRef.current?.in.play();
     }, delay);
     timersRef.current.push(t1);
 
-    if (hold > 0) {
+    if (holdIn > 1) {
       const t2 = window.setTimeout(() => {
         if (runningRef.current) cuesRef.current?.hold.play();
       }, delay + inhale * 1000);
@@ -54,13 +54,20 @@ export function useBreathingAudio() {
 
     const t3 = window.setTimeout(() => {
       if (runningRef.current) cuesRef.current?.out.play();
-    }, delay + (inhale + hold) * 1000);
+    }, delay + (inhale + holdIn) * 1000);
     timersRef.current.push(t3);
 
-    const t4 = window.setTimeout(() => {
+    if (holdOut > 1) {
+      const t4 = window.setTimeout(() => {
+        if (runningRef.current) cuesRef.current?.hold.play();
+      }, delay + (inhale + holdIn + exhale) * 1000);
+      timersRef.current.push(t4);
+    }
+
+    const t5 = window.setTimeout(() => {
       scheduleCycle(config, 0);
     }, delay + totalMs);
-    timersRef.current.push(t4);
+    timersRef.current.push(t5);
   }, []);
 
   const start = useCallback((config: BreathingConfig) => {
