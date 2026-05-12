@@ -49,6 +49,7 @@ export function useBreathingAnimation() {
   const elementRef = useRef<HTMLDivElement | null>(null);
   const configRef = useRef<BreathingConfig | null>(null);
   const runningRef = useRef(false);
+  const stopAfterCycleResolveRef = useRef<(() => void) | null>(null);
 
   const startCycle = useCallback(() => {
     const el = elementRef.current;
@@ -89,6 +90,16 @@ export function useBreathingAnimation() {
     });
 
     anim.onfinish = () => {
+      if (stopAfterCycleResolveRef.current) {
+        const resolve = stopAfterCycleResolveRef.current;
+        stopAfterCycleResolveRef.current = null;
+        runningRef.current = false;
+        if (elementRef.current) {
+          elementRef.current.style.transform = 'scale(1)';
+        }
+        resolve();
+        return;
+      }
       startCycle();
     };
 
@@ -103,6 +114,7 @@ export function useBreathingAnimation() {
 
   const stop = useCallback(() => {
     runningRef.current = false;
+    stopAfterCycleResolveRef.current = null;
     if (animationRef.current) {
       animationRef.current.onfinish = null;
       animationRef.current.cancel();
@@ -113,9 +125,17 @@ export function useBreathingAnimation() {
     }
   }, []);
 
+  const stopAfterCycle = useCallback((): Promise<void> => {
+    if (!runningRef.current) return Promise.resolve();
+    return new Promise((resolve) => {
+      stopAfterCycleResolveRef.current = resolve;
+    });
+  }, []);
+
   useEffect(() => {
     return () => {
       runningRef.current = false;
+      stopAfterCycleResolveRef.current = null;
       if (animationRef.current) {
         animationRef.current.onfinish = null;
         animationRef.current.cancel();
@@ -124,5 +144,5 @@ export function useBreathingAnimation() {
     };
   }, []);
 
-  return { elementRef, start, stop };
+  return { elementRef, start, stop, stopAfterCycle };
 }

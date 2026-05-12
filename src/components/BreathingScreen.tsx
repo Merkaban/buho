@@ -17,16 +17,18 @@ const initialState: BreathingState = {
 
 export function BreathingScreen() {
   const [state, dispatch] = useReducer(breathingReducer, initialState);
-  const { elementRef, start, stop } = useBreathingAnimation();
-  const { start: audioStart, stop: audioStop, toggleMusic } = useBreathingAudio();
+  const { elementRef, start, stop, stopAfterCycle } = useBreathingAnimation();
+  const { start: audioStart, stop: audioStop, windDown, fadeMusic, toggleMusic } = useBreathingAudio();
   const { activate: wakeLockActivate, release: wakeLockRelease } = useWakeLock();
 
-  const handleAutoStop = useCallback(() => {
+  const handleAutoStop = useCallback(async () => {
+    windDown();
+    await stopAfterCycle();
+    await fadeMusic(10000);
     dispatch({ type: 'STOP' });
     stop();
-    audioStop();
     wakeLockRelease();
-  }, [stop, audioStop, wakeLockRelease]);
+  }, [windDown, stopAfterCycle, fadeMusic, stop, wakeLockRelease]);
 
   const { remaining, start: timerStart, clear: timerClear } = useSessionTimer(handleAutoStop);
 

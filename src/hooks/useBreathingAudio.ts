@@ -9,6 +9,7 @@ export function useBreathingAudio() {
   const musicRef = useRef<Howl | null>(null);
   const timersRef = useRef<number[]>([]);
   const runningRef = useRef(false);
+  const windingDownRef = useRef(false);
   const musicEnabledRef = useRef(true);
 
   // Create Howl instances eagerly on mount so they share the global AudioContext
@@ -41,13 +42,13 @@ export function useBreathingAudio() {
     const totalMs = (inhale + holdIn + exhale + holdOut) * 1000;
 
     const t1 = window.setTimeout(() => {
-      if (runningRef.current) cuesRef.current?.in.play();
+      if (runningRef.current && !windingDownRef.current) cuesRef.current?.in.play();
     }, delay);
     timersRef.current.push(t1);
 
     if (holdIn > 1) {
       const t2 = window.setTimeout(() => {
-        if (runningRef.current) cuesRef.current?.hold.play();
+        if (runningRef.current && !windingDownRef.current) cuesRef.current?.hold.play();
       }, delay + inhale * 1000);
       timersRef.current.push(t2);
     }
@@ -59,19 +60,20 @@ export function useBreathingAudio() {
 
     if (holdOut > 1) {
       const t4 = window.setTimeout(() => {
-        if (runningRef.current) cuesRef.current?.hold.play();
+        if (runningRef.current && !windingDownRef.current) cuesRef.current?.hold.play();
       }, delay + (inhale + holdIn + exhale) * 1000);
       timersRef.current.push(t4);
     }
 
     const t5 = window.setTimeout(() => {
-      scheduleCycle(config, 0);
+      if (!windingDownRef.current) scheduleCycle(config, 0);
     }, delay + totalMs);
     timersRef.current.push(t5);
   }, []);
 
   const start = useCallback((config: BreathingConfig) => {
     runningRef.current = true;
+    windingDownRef.current = false;
 
     // Unlock iOS AudioContext — must happen synchronously in user gesture
     const ctx = Howler.ctx;
@@ -90,12 +92,38 @@ export function useBreathingAudio() {
 
   const stop = useCallback(() => {
     runningRef.current = false;
+    windingDownRef.current = false;
     timersRef.current.forEach(id => window.clearTimeout(id));
     timersRef.current = [];
     musicRef.current?.stop();
     cuesRef.current?.in.stop();
     cuesRef.current?.hold.stop();
     cuesRef.current?.out.stop();
+  }, []);
+
+  const windDown = useCallback(() => {
+    windingDownRef.current = true;
+  }, []);
+
+  const fadeMusic = useCallback((durationMs: number): Promise<void> => {
+    return new Promise((resolve) => {
+      const music = musicRef.current;
+      if (!music) { resolve(); return; }
+      const steps = 20;
+      const interval = durationMs / steps;
+      const startVolume = 0.4;
+      let step = 0;
+      const timer = setInterval(() => {
+        step++;
+        music.volume(startVolume * (1 - step / steps));
+        if (step >= steps) {
+          clearInterval(timer);
+          music.stop();
+          music.volume(startVolume);
+          resolve();
+        }
+      }, interval);
+    });
   }, []);
 
   const toggleMusic = useCallback((enabled: boolean) => {
@@ -105,5 +133,5 @@ export function useBreathingAudio() {
     }
   }, []);
 
-  return { start, stop, toggleMusic };
+  return { start, stop, windDown, fadeMusic, toggleMusic };
 }
