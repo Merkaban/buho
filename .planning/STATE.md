@@ -65,6 +65,9 @@ Plans: 11/11 complete (Phase 1: 3/3, Phase 2: 3/3, Phase 3: 2/2, Phase 4: 1/1, P
 - useRef for onComplete callback to avoid stale closures in setInterval
 - remainingRef + setState pattern for both instant reads and React re-renders
 - CountdownDisplay renders empty string when not visible (prevents stale time flash on fade-out)
+- Graceful session end: windDown flag suppresses future cues but lets current "breathe out" fire; stopAfterCycle resolves on animation onfinish; music fades over 10s via setInterval volume steps
+- 4-phase breathing cycle: inhale → hold in → exhale → hold out (holdIn/holdOut replace old hold property)
+- Hold audio cue threshold: only plays when holdIn/holdOut > 1 second (too short to be useful otherwise)
 
 ## Performance Metrics
 
@@ -82,11 +85,17 @@ Plans: 11/11 complete (Phase 1: 3/3, Phase 2: 3/3, Phase 3: 2/2, Phase 4: 1/1, P
 | 05 | 01 | 3min | 2 | 7 |
 | 05 | 02 | 2min | 2 | 4 |
 
+## Quick Tasks Completed
+
+| ID | Date | Description |
+|----|------|-------------|
+| 260512-uih | 2026-05-12 | Graceful session end: finish current exhale, stop voice cues, fade music over 10s |
+
 ## Last Session
 
-- **Timestamp:** 2026-05-10
-- **Completed:** 05-02-PLAN.md (Session Countdown Timer — auto-stop on expiry)
+- **Timestamp:** 2026-05-12
+- **Completed:** Quick task 260512-uih (graceful session end)
 - **Resume:** Phase 06 (Navigation & Meditation Placeholder)
 
 ---
-*Last updated: 2026-05-10 after completing 05-02 session countdown timer*
+*Last updated: 2026-05-12 after completing graceful session end quick task*
