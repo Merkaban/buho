@@ -6,6 +6,7 @@ const STORAGE_KEY = 'buho-settings';
 interface PersistedSettings {
   config: BreathingConfig;
   musicEnabled: boolean;
+  voiceEnabled: boolean;
 }
 
 function clampConfig(raw: Partial<BreathingConfig>): BreathingConfig {
@@ -18,23 +19,24 @@ function clampConfig(raw: Partial<BreathingConfig>): BreathingConfig {
   };
 }
 
-export function loadSettings(): { config: BreathingConfig; musicEnabled: boolean } {
+export function loadSettings(): { config: BreathingConfig; musicEnabled: boolean; voiceEnabled: boolean } {
   try {
     const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { config: { ...DEFAULT_CONFIG }, musicEnabled: true };
+    if (!raw) return { config: { ...DEFAULT_CONFIG }, musicEnabled: true, voiceEnabled: true };
     const parsed = JSON.parse(raw) as Partial<PersistedSettings>;
     return {
       config: clampConfig(parsed.config || {}),
       musicEnabled: parsed.musicEnabled ?? true,
+      voiceEnabled: parsed.voiceEnabled ?? true,
     };
   } catch {
-    return { config: { ...DEFAULT_CONFIG }, musicEnabled: true };
+    return { config: { ...DEFAULT_CONFIG }, musicEnabled: true, voiceEnabled: true };
   }
 }
 
-export function saveSettings(config: BreathingConfig, musicEnabled: boolean): void {
+export function saveSettings(config: BreathingConfig, musicEnabled: boolean, voiceEnabled: boolean): void {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ config, musicEnabled }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ config, musicEnabled, voiceEnabled }));
   } catch {
     // localStorage full or unavailable -- silently ignore
   }

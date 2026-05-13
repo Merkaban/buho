@@ -133,5 +133,13 @@ export function useBreathingAudio() {
     }
   }, []);
 
-  return { start, stop, windDown, fadeMusic, toggleMusic };
+  const toggleVoice = useCallback((enabled: boolean) => {
+    if (cuesRef.current) {
+      cuesRef.current.in.mute(!enabled);
+      cuesRef.current.hold.mute(!enabled);
+      cuesRef.current.out.mute(!enabled);
+    }
+  }, []);
+
+  return { start, stop, windDown, fadeMusic, toggleMusic, toggleVoice };
 }

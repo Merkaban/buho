@@ -33,6 +33,8 @@ export function breathingReducer(state: BreathingState, action: BreathingAction)
     }
     case 'TOGGLE_MUSIC':
       return { ...state, musicEnabled: !state.musicEnabled };
+    case 'TOGGLE_VOICE':
+      return { ...state, voiceEnabled: !state.voiceEnabled };
     case 'SET_DURATION': {
       if (state.session === 'running') return state;
       const value = Math.max(MIN_DURATION, Math.min(MAX_DURATION, action.value));
