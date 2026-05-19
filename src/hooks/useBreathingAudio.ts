@@ -11,6 +11,7 @@ export function useBreathingAudio() {
   const runningRef = useRef(false);
   const windingDownRef = useRef(false);
   const musicEnabledRef = useRef(true);
+  const musicNeedsRestartRef = useRef(false);
 
   // Create Howl instances eagerly on mount so they share the global AudioContext
   useEffect(() => {
@@ -22,9 +23,12 @@ export function useBreathingAudio() {
     musicRef.current = new Howl({
       src: ['/audio/meditation.mp3'],
       html5: true,
-      loop: true,
+      loop: false,
       preload: true,
       volume: 0.4,
+      onend: () => {
+        musicNeedsRestartRef.current = true;
+      },
     });
 
     return () => {
@@ -42,7 +46,12 @@ export function useBreathingAudio() {
     const totalMs = (inhale + holdIn + exhale + holdOut) * 1000;
 
     const t1 = window.setTimeout(() => {
-      if (runningRef.current && !windingDownRef.current) cuesRef.current?.in.play();
+      if (!runningRef.current) return;
+      if (!windingDownRef.current) cuesRef.current?.in.play();
+      if (musicNeedsRestartRef.current && musicEnabledRef.current && musicRef.current) {
+        musicNeedsRestartRef.current = false;
+        musicRef.current.play();
+      }
     }, delay);
     timersRef.current.push(t1);
 
@@ -74,6 +83,7 @@ export function useBreathingAudio() {
   const start = useCallback((config: BreathingConfig) => {
     runningRef.current = true;
     windingDownRef.current = false;
+    musicNeedsRestartRef.current = false;
 
     // Unlock iOS AudioContext — must happen synchronously in user gesture
     const ctx = Howler.ctx;
