@@ -1,16 +1,17 @@
 ---
 phase: 6
 slug: navigation-meditation-placeholder
-status: draft
-nyquist_compliant: false
+status: planned
+nyquist_compliant: true
 wave_0_complete: false
 created: 2026-06-10
+updated: 2026-06-10
 ---
 
 # Phase 6 — Validation Strategy
 
 > Per-phase validation contract for feedback sampling during execution.
-> Filled by gsd-planner; this draft is scaffolded from RESEARCH.md §"Validation Architecture".
+> Filled by gsd-planner from RESEARCH.md §"Validation Architecture" and the per-task verify blocks across plans 06-01..06-06.
 
 ---
 
@@ -18,58 +19,93 @@ created: 2026-06-10
 
 | Property | Value |
 |----------|-------|
-| **Framework** | vitest 4.1.5 + jsdom 29 + React Testing Library |
+| **Framework** | vitest 4.1.5 + jsdom 29 + React Testing Library 16.3.2 |
 | **Config file** | vite.config.ts (test block) |
-| **Quick run command** | `npx vitest run --changed` |
-| **Full suite command** | `npx vitest run` |
-| **Estimated runtime** | ~{TBD by planner} seconds |
+| **Quick run command** | `npm test -- --run <relative-test-path>` |
+| **Full suite command** | `npm test -- --run` |
+| **Estimated runtime** | ~3 seconds for full suite based on Phase 5 baseline; new Phase 6 tests add ~40 cases — projected ~5 seconds total |
 
 ---
 
 ## Sampling Rate
 
-- **After every task commit:** Run `npx vitest run --changed`
-- **After every plan wave:** Run `npx vitest run`
-- **Before `/gsd-verify-work`:** Full suite must be green
-- **Max feedback latency:** 10 seconds (target — planner to confirm against measured runtime)
+- **After every task commit:** Run `npm test -- --run <task-relevant test file>` (per task `<verify>` block).
+- **After every plan wave:** Run `npm test -- --run` (full suite).
+- **Before `/gsd-verify-work`:** Full suite must be green AND device smoke checkpoint (Plan 06-06 Task 3) must be `approved` or `defer:`-noted.
+- **Max feedback latency:** 10 seconds — comfortably under target.
 
 ---
 
 ## Per-Task Verification Map
 
-*Planner fills this in when PLAN.md tasks are written. One row per task.*
+| Plan-Task | Files Touched | Automated Verify | Wave 0 Dependency | Manual? |
+|-----------|---------------|------------------|-------------------|---------|
+| 06-01-T1 | .planning/ROADMAP.md | `grep -c "MEDT-08" .planning/ROADMAP.md` ≥ 1 + 7 other source assertions | n/a (doc-only) | no |
+| 06-01-T2 | .planning/REQUIREMENTS.md | `grep -c "^- \[ \] \*\*MEDT-0[1-8]\*\*" .planning/REQUIREMENTS.md` = 8 + 5 other source assertions | n/a (doc-only) | no |
+| 06-02-T1 | package.json, package-lock.json | `node -e "require('idb/package.json').version === '8.0.3'"` + `npm test -- --run` (regression) | n/a (no test code) | no |
+| 06-02-T2 | src/lib/formatTime.ts, src/components/CountdownDisplay.tsx, src/__tests__/format-time.test.ts | `npm test -- --run src/__tests__/format-time.test.ts` (9 tests) + `npm test -- --run` | self-creates tests | no |
+| 06-03-T1 | src/__tests__/meditations-db.test.ts | `npm test -- --run src/__tests__/meditations-db.test.ts` exits non-zero (RED) — 6 tests fail-correctly | n/a (this IS the Wave 0 setup) | no |
+| 06-03-T2 | src/types/meditation.ts, src/lib/meditationsDB.ts | `npm test -- --run src/__tests__/meditations-db.test.ts` exits 0 with 6 passing (GREEN) + `npm test -- --run` | satisfied by 06-03-T1 | no |
+| 06-04-T1 | src/lib/extractDuration.ts, src/__tests__/extract-duration.test.ts | `npm test -- --run src/__tests__/extract-duration.test.ts` (5 tests) | self-creates tests | no |
+| 06-04-T2 | src/hooks/useMeditationLibrary.ts | `npm test -- --run` + `npx tsc --noEmit` (component tests in T4 indirectly exercise hook) | satisfied by T4 mocked-DB tests | no |
+| 06-04-T3 | src/components/MeditationListRow.tsx, src/components/AddMeditationButton.tsx | `npx tsc --noEmit` + `npm test -- --run` (component tests in T4 cover behaviors) | satisfied by T4 | no |
+| 06-04-T4 | src/components/MeditationLibrary.tsx, src/__tests__/meditation-library.test.tsx | `npm test -- --run src/__tests__/meditation-library.test.tsx` (8 tests) + `npm test -- --run` | self-creates tests | no |
+| 06-05-T1 | src/hooks/useMeditationPlayer.ts, src/__tests__/meditation-player.test.ts | `npm test -- --run src/__tests__/meditation-player.test.ts` (10 tests) + `npm test -- --run` | self-creates tests | no |
+| 06-05-T2 | src/components/MeditationPlayer.tsx, src/__tests__/meditation-player.test.tsx | `npm test -- --run src/__tests__/meditation-player.test.tsx` (9 tests) + `npm test -- --run` | self-creates tests | no |
+| 06-06-T1 | src/__tests__/navigation.test.tsx, src/__tests__/meditation-screen.test.tsx | `npm test -- --run src/__tests__/meditation-screen.test.tsx` exits non-zero (RED) — 7 tests fail-correctly | n/a (this IS the Wave 0 setup for orchestration) | no |
+| 06-06-T2 | src/components/MeditationScreen.tsx | `npm test -- --run src/__tests__/meditation-screen.test.tsx` (7 GREEN) + `npm test -- --run src/__tests__/navigation.test.tsx` (6 GREEN) + `npm test -- --run` (full suite) | satisfied by 06-06-T1 | no |
+| 06-06-T3 | (manual checkpoint, no files) | n/a | n/a | **YES — iOS device smoke** |
+
+**Sampling continuity check:** No three consecutive tasks lack an automated verify. Doc-only tasks (06-01-T1, 06-01-T2) have source-assertion verifies; install task (06-02-T1) has both a node-eval verify AND a regression run. No watch-mode flags anywhere.
 
 ---
 
 ## Wave 0 Requirements
 
-- [ ] `tests/lib/meditationsDB.test.ts` — IndexedDB wrapper unit tests (jsdom IDB stubs)
-- [ ] `tests/hooks/useMeditationPlayer.test.ts` — Howler interaction tests with mocked Howl
-- [ ] `tests/components/MeditationLibrary.test.tsx` — empty state, populated list, delete-row interaction
-- [ ] `tests/components/MeditationPlayer.test.tsx` — play/pause/stop/auto-stop on end + wake-lock activate/release calls
+All RED-state test files are written by their owning plans (TDD pattern: write failing tests first, then implement). No "scaffold-only" wave is needed because each implementation plan owns the test scaffold for its own surface:
 
-*Existing infrastructure (vitest + jsdom + RTL) is sufficient — no framework install needed.*
+- [x] **Defined in 06-03-T1:** `src/__tests__/meditations-db.test.ts` — IDB CRUD round-trip + sort + delete + persist + duplicate-rejection (6 tests)
+- [x] **Defined in 06-04-T1:** `src/__tests__/extract-duration.test.ts` — File → finite duration with Infinity fallback (5 tests)
+- [x] **Defined in 06-04-T4:** `src/__tests__/meditation-library.test.tsx` — empty/populated/loading/add/delete-confirm/error toast (8 tests)
+- [x] **Defined in 06-05-T1:** `src/__tests__/meditation-player.test.ts` — Hook unit tests with mocked Howler + wake-lock (10 tests)
+- [x] **Defined in 06-05-T2:** `src/__tests__/meditation-player.test.tsx` — Component RTL tests (9 tests)
+- [x] **Defined in 06-06-T1:** `src/__tests__/meditation-screen.test.tsx` — View-state branching + panel root (7 tests) AND `src/__tests__/navigation.test.tsx` rewrite (replaces legacy "Meditate" assertion)
+
+**Total new test cases authored in Phase 6:** ~45 unit + integration tests across 6 files.
+
+**Mock strategy** (per RESEARCH.md §"Wave 0 Gaps" lines 663–664):
+- `meditations-db.test.ts`: real `idb` calls in jsdom 29; `indexedDB.deleteDatabase('buho-meditations')` per test + `vi.resetModules()` to flush memoized `dbPromise`.
+- `meditation-library.test.tsx`, `meditation-screen.test.tsx`: mock `meditationsDB.ts` (vi.mock) so component tests don't hit real IDB.
+- `meditation-player.test.ts`: mock `howler` module returning a stub Howl class; mock `useWakeLock` returning `{ activate: vi.fn(), release: vi.fn() }`.
+- `meditation-player.test.tsx`: mock `useMeditationPlayer` directly; the hook's internals are covered by `meditation-player.test.ts`.
+- `meditation-screen.test.tsx`: mock `useMeditationLibrary` AND `MeditationPlayer` (player's internals covered by player tests; screen tests focus on orchestration).
 
 ---
 
 ## Manual-Only Verifications
 
-| Behavior | Requirement | Why Manual | Test Instructions |
-|----------|-------------|------------|-------------------|
-| iOS Files-sheet surfaces audio/* | MEDT-* (upload) | Real iOS device behavior (Files app, iCloud Drive, Voice Memos export) cannot be reproduced in jsdom | On installed PWA: tap Add meditation → confirm Files app + iCloud Drive options appear → upload an .m4a from Voice Memos → confirm row appears |
-| Howler + Blob URL playback on iOS | MEDT-* (player) | iOS Safari audio quirks (autoplay, Web Audio context state) only manifest on real device | On installed PWA: play uploaded meditation → confirm audio audible → pause/resume → confirm correct elapsed time → stop → confirm returns to library |
-| Wake lock active during playback | MEDT-* (wake lock) | Screen-lock behavior cannot be observed in tests | On installed PWA: start playback → leave device idle past auto-lock timeout → confirm screen stays awake → stop → confirm screen locks normally |
-| IndexedDB persistence across reload | MEDT-* (persist) | Real browser/PWA persistence with quota & 7-day eviction is environmental | Upload 1+ meditation → close PWA → reopen → confirm meditation still listed and playable |
+These are owned by Plan 06-06 Task 3 (`checkpoint:human-verify`). The full step list is in Plan 06-06; this table summarizes per-requirement coverage:
+
+| Behavior | Requirement | Why Manual | Owner |
+|----------|-------------|------------|-------|
+| iOS Files-sheet surfaces audio/* (not DRM Music app) | MEDT-01 | Real iOS Files behavior cannot be reproduced in jsdom (RESEARCH.md A1) | Plan 06-06 Task 3, step C |
+| Voice Memos `.m4a` upload + duration extraction on iOS | MEDT-01 | iOS-specific media metadata behavior | Plan 06-06 Task 3, step C+D |
+| Howler + Blob URL playback on iOS Safari | MEDT-04, MEDT-05 | iOS Safari audio quirks (autoplay, AudioContext state) only on real device (RESEARCH.md A2) | Plan 06-06 Task 3, step F |
+| Wake lock active during playback (screen does not lock) | MEDT-06 | Screen-lock behavior is environmental | Plan 06-06 Task 3, step G |
+| Auto-stop on natural end | MEDT-05 (D-15) | Time-based behavior best confirmed end-to-end on device | Plan 06-06 Task 3, step H |
+| IndexedDB persistence across PWA force-quit + reopen | MEDT-02 | Real PWA persistence with browser quota policy is environmental (RESEARCH.md Pitfall 3) | Plan 06-06 Task 3, step E |
+| 3-panel swipe still works post-rebuild | NAV-01, NAV-02 | Native scroll-snap behavior on iOS Safari | Plan 06-06 Task 3, step A |
+| Aesthetic continuity + VoiceOver announcements | MEDT-08 | Visual + accessibility verification by human | Plan 06-06 Task 3, step J |
 
 ---
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 10s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or are explicit checkpoints (06-06-T3 only)
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify (verified above)
+- [x] Wave 0 covers all MISSING references (test files authored by their owning plans in TDD-RED-then-GREEN sequence)
+- [x] No watch-mode flags
+- [x] Feedback latency < 10s (full suite ≈ 5s on Phase 5 hardware)
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** approved-by-planner-2026-06-10

@@ -142,6 +142,26 @@ Plans:
 ### Phase 6: Navigation & Meditation Placeholder
 **Goal:** Two-mode swipeable layout with a meditation placeholder screen
 **Mode:** mvp
+**Plans:** 6 plans
+
+Plans:
+
+**Wave 1**
+- [ ] 06-01-PLAN.md — Update ROADMAP/REQUIREMENTS for Phase 6 (replace MEDT-01/02 with MEDT-01..MEDT-08)
+- [ ] 06-02-PLAN.md — Install idb 8.0.3 + extract formatTime to src/lib/formatTime.ts
+
+**Wave 2** *(blocked on Wave 1 completion)*
+- [ ] 06-03-PLAN.md — MeditationRecord type + meditationsDB.ts (idb-backed CRUD) + integration tests
+
+**Wave 3** *(blocked on Wave 2 completion)*
+- [ ] 06-04-PLAN.md — Library slice: useMeditationLibrary + MeditationLibrary + MeditationListRow + AddMeditationButton + extractDuration
+
+**Wave 4** *(blocked on Wave 3 completion)*
+- [ ] 06-05-PLAN.md — Player slice: useMeditationPlayer + MeditationPlayer (Howler + wake lock)
+
+**Wave 5** *(blocked on Wave 4 completion)*
+- [ ] 06-06-PLAN.md — MeditationScreen orchestration + navigation.test.tsx update + iOS device smoke checkpoint
+
 **Success Criteria:**
 1. User can swipe left/right to switch between breathing and meditation modes
 2. Page indicator dots show which mode is active
