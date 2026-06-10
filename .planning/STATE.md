@@ -3,13 +3,13 @@ gsd_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: executing
-last_updated: "2026-06-10T18:21:42.159Z"
+last_updated: "2026-06-10T19:59:43.509Z"
 progress:
   total_phases: 6
   completed_phases: 5
-  total_plans: 11
+  total_plans: 17
   completed_plans: 11
-  percent: 100
+  percent: 65
 ---
 
 # Project State: mindfulONE

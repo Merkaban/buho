@@ -271,8 +271,10 @@ function getDb(): Promise<IDBPDatabase> {
 
 export async function listMeditations(): Promise<MeditationRecord[]> {
   const db = await getDb();
-  // getAllFromIndex returns sorted ascending by addedAt
-  return db.getAllFromIndex(STORE, 'addedAt');
+  // Index iteration is ascending by spec; reverse to deliver newest-first to the UI
+  // (sort order RESOLVED in Open Questions Q3: descending by addedAt).
+  const records = await db.getAllFromIndex(STORE, 'addedAt');
+  return records.reverse();
 }
 
 export async function addMeditation(record: MeditationRecord): Promise<void> {
@@ -542,7 +544,7 @@ See Pattern 3 above. Source: Howler.js README (Core options) + MDN URL.createObj
 | A1 | iOS Safari `<input type="file" accept="audio/*">` opens the Files sheet (Files / iCloud Drive / On My iPhone) | iOS file picker UX (focus 4) | If iOS shows only the Music library (DRM-protected, can't pick), import is broken. **Mitigation:** test on a real iOS 17+ device early in Wave 2; documented in Validation Architecture as a manual smoke test. [ASSUMED] |
 | A2 | Howler in `html5: true` mode + Blob URL + `format: [...]` plays reliably on iOS Safari for m4a/mp3/wav | Pattern 3 / Pitfall 4 | If iOS rejects the Blob URL or format hint, fallback is to use a native `<audio>` element directly. **Mitigation:** smoke test with each common upload format on device. [ASSUMED] — based on Howler README + general HTML5 audio behavior, not a vendor-confirmed pairing. |
 | A3 | `navigator.storage.persist()` improves persistence on installed iOS PWAs | Pitfall 3 | Even if it returns `true`, the 7-day rule may still apply. Treat as best-effort. [ASSUMED] — MDN says the request "automatically approve[s] or den[ies]"; web.dev article doesn't confirm Safari fully exempts from eviction. |
-| A4 | `getAllFromIndex('addedAt')` returns ascending-by-addedAt order | Pattern 1 | Spec-defined: index iteration is in key order. [VERIFIED via idb docs + IndexedDB spec] — HIGH confidence, but flagged because if the planner picks descending sort the implementation must `.reverse()` or use a cursor. |
+| A4 | `getAllFromIndex('addedAt')` returns ascending-by-addedAt order | Pattern 1 | Spec-defined: index iteration is in key order. [VERIFIED via idb docs + IndexedDB spec] — HIGH confidence. Per Q3 RESOLVED, the wrapper reverses the result to deliver newest-first to the UI. |
 | A5 | Trash icon (vs swipe-to-delete) is the right v1 UX choice | Don't Hand-Roll / Standard Stack | If the user's preference is iOS-native swipe, plan changes to add a custom pointer-event swipe handler (~50 LOC). **Mitigation:** flag at gsd-discuss-phase or accept user feedback post-v1. [ASSUMED based on HIG general knowledge and project's "no extra deps" ethos] |
 | A6 | `crypto.randomUUID()` is available on all target iOS versions in 2026 | Standard Stack > Supporting | If targeting <iOS 15.4, fall back to `Date.now() + Math.random().toString(36)`. [CITED: MDN compatibility table — iOS Safari 15.4+]. Project has already shipped APIs (Wake Lock) that are 16.4+, so 15.4 is safe. HIGH confidence. |
 
@@ -550,26 +552,26 @@ See Pattern 3 above. Source: Howler.js README (Core options) + MDN URL.createObj
 - A1 and A2 (iOS file picker + Howler+Blob behavior on real device) — flag in Validation Architecture as **mandatory device smoke tests**, plan for a fallback path if either fails.
 - A5 (trash icon vs swipe-to-delete) — planner can lock based on this recommendation, but if the user later asks for swipe, treat as a small follow-up phase.
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **What MIME types and extensions does iOS's "Files" sheet actually surface for `accept="audio/*"`?**
    - What we know: documented to open Files sheet; in practice iCloud Drive and On My iPhone audio files are exposable.
    - What's unclear: whether DRM-protected Apple Music tracks are filtered out (they should be — DRM); whether VoiceMemos `.m4a` files always read duration cleanly.
-   - Recommendation: test with a VoiceMemos export and an iCloud Drive `.mp3` during Wave 2 device smoke test.
+   - **RESOLVED:** Defer to Plan 06-06 device smoke test (manual verification on a real iOS 17+ device — VoiceMemos `.m4a` and iCloud Drive `.mp3`). Captured in `06-VALIDATION.md` Manual-Only Verifications.
 
 2. **Should we display total used storage / quota?**
    - What we know: deferred per CONTEXT.md ("Storage quota warnings / used-space display").
    - What's unclear: whether the user wants a minimal "X meditations stored" footer.
-   - Recommendation: omit per deferred list; revisit if a real user hits the limit.
+   - **RESOLVED:** Omit per CONTEXT.md `<deferred>` "Storage quota warnings". Inline `Not enough storage` toast on `QuotaExceededError` is the only surface.
 
 3. **Sort order: oldest-first or newest-first?**
    - What we know: filename is the title, no manual ordering. CONTEXT.md doesn't specify.
-   - Recommendation: **newest-first** (descending by `addedAt`) — most-recent uploads are most likely to be played. Trivial to flip; planner should pick.
+   - **RESOLVED:** Newest-first (descending by `addedAt`). Most-recent uploads are most likely to be played. `listMeditations` reverses the index iteration result so the UI receives `[newest, …, oldest]`. Plan 06-03 Task 2 enforces this and adds a sort-order test in `meditations-db.test.ts`.
 
 4. **Should `useMeditationPlayer` re-acquire wake lock on `visibilitychange`?**
    - What we know: `useWakeLock` already does this via `activeRef`. Setting `activeRef.current = true` on `activate()` covers it.
    - What's unclear: whether iOS reliably re-grants the lock when the meditation has been paused → backgrounded → foregrounded.
-   - Recommendation: document the existing Phase-4 behavior carries over; verify in device smoke test.
+   - **RESOLVED:** Phase 4 behavior carries over — no Phase 6 hook change. Verify on real device in Plan 06-06 Task 3 (device smoke test, step G).
 
 ## Environment Availability
 
