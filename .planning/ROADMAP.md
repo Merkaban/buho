@@ -13,7 +13,7 @@
 | 3 | Audio Integration | Complete (2/2) | BRTH-09, BRTH-10, BRTH-11, BRTH-12 |
 | 4 | Wake Lock & Session Polish | Complete (1/1) | BRTH-13 |
 | 5 | Settings & Persistence | Complete (2/2) | SETT-01, SETT-02 |
-| 6 | Navigation & Meditation Placeholder | Three-panel swipeable layout (Landing, Breathing, Meditation) with a working meditation library that lets the user upload, browse, play, and delete personal recordings | NAV-01, NAV-02, MEDT-01, MEDT-02, MEDT-03, MEDT-04, MEDT-05, MEDT-06, MEDT-07, MEDT-08 |
+| 6 | 1/6 | In Progress|  |
 
 ---
 
@@ -142,12 +142,12 @@ Plans:
 ### Phase 6: Navigation & Meditation Placeholder
 **Goal:** Three-panel swipeable layout (Landing, Breathing, Meditation) with a working meditation library that lets the user upload, browse, play, and delete personal recordings
 **Mode:** mvp
-**Plans:** 6 plans
+**Plans:** 1/6 plans executed
 
 Plans:
 
 **Wave 1**
-- [ ] 06-01-PLAN.md — Update ROADMAP/REQUIREMENTS for Phase 6 (replace MEDT-01/02 with MEDT-01..MEDT-08)
+- [x] 06-01-PLAN.md — Update ROADMAP/REQUIREMENTS for Phase 6 (replace MEDT-01/02 with MEDT-01..MEDT-08)
 - [ ] 06-02-PLAN.md — Install idb 8.0.3 + extract formatTime to src/lib/formatTime.ts
 
 **Wave 2** *(blocked on Wave 1 completion)*
