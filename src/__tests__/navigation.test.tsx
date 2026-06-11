@@ -1,8 +1,12 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import App from '../App';
 
 describe('Navigation Structure (D-04, D-06)', () => {
+  beforeEach(async () => {
+    await indexedDB.deleteDatabase('buho-meditations');
+  });
+
   it('renders 3 swipeable panels', () => {
     const { container } = render(<App />);
     const panels = container.querySelectorAll('[data-panel]');
@@ -32,9 +36,9 @@ describe('Navigation Structure (D-04, D-06)', () => {
     expect(circle).not.toBeNull();
   });
 
-  it('renders meditation screen with placeholder text (D-15)', () => {
+  it('renders meditation screen with empty-state add button (MEDT-03)', async () => {
     render(<App />);
-    expect(screen.getByText('Meditate')).toBeDefined();
+    expect(await screen.findByRole('button', { name: /add meditation/i })).toBeDefined();
   });
 });
 
