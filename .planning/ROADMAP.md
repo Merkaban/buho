@@ -2,7 +2,7 @@
 
 **Created:** 2026-05-09
 **Phases:** 6
-**Requirements:** 23 mapped
+**Requirements:** 29 mapped
 
 ## Phase Overview
 
@@ -13,7 +13,7 @@
 | 3 | Audio Integration | Complete (2/2) | BRTH-09, BRTH-10, BRTH-11, BRTH-12 |
 | 4 | Wake Lock & Session Polish | Complete (1/1) | BRTH-13 |
 | 5 | Settings & Persistence | Complete (2/2) | SETT-01, SETT-02 |
-| 6 | Navigation & Meditation Placeholder | Swipeable two-mode layout with meditation placeholder | NAV-01, NAV-02, MEDT-01, MEDT-02 |
+| 6 | Navigation & Meditation Placeholder | Three-panel swipeable layout (Landing, Breathing, Meditation) with a working meditation library that lets the user upload, browse, play, and delete personal recordings | NAV-01, NAV-02, MEDT-01, MEDT-02, MEDT-03, MEDT-04, MEDT-05, MEDT-06, MEDT-07, MEDT-08 |
 
 ---
 
@@ -140,7 +140,7 @@ Plans:
 ---
 
 ### Phase 6: Navigation & Meditation Placeholder
-**Goal:** Two-mode swipeable layout with a meditation placeholder screen
+**Goal:** Three-panel swipeable layout (Landing, Breathing, Meditation) with a working meditation library that lets the user upload, browse, play, and delete personal recordings
 **Mode:** mvp
 **Plans:** 6 plans
 
@@ -163,13 +163,17 @@ Plans:
 - [ ] 06-06-PLAN.md — MeditationScreen orchestration + navigation.test.tsx update + iOS device smoke checkpoint
 
 **Success Criteria:**
-1. User can swipe left/right to switch between breathing and meditation modes
-2. Page indicator dots show which mode is active
-3. Meditation screen displays a placeholder/coming-soon message
-4. Meditation screen uses the same dark minimal design
-5. Swipe gesture does not interfere with breathing controls
+1. User can swipe between Landing, Breathing, and Meditation panels
+2. Page indicator shows which of the three panels is active
+3. User can upload meditation audio files via the iOS file picker
+4. Uploaded meditations persist locally (IndexedDB) across app restarts
+5. User can browse a library of uploaded meditations and tap one to play
+6. Meditation player shows title and elapsed/total time, supports play/pause/stop
+7. Screen does not lock during meditation playback
+8. User can delete meditations from the library
+9. Meditation panel uses the same dark minimal design as breathing
 
-**Requirements:** NAV-01, NAV-02, MEDT-01, MEDT-02
+**Requirements:** NAV-01, NAV-02, MEDT-01, MEDT-02, MEDT-03, MEDT-04, MEDT-05, MEDT-06, MEDT-07, MEDT-08
 
 ---
 
@@ -186,4 +190,4 @@ Phase 1 (PWA Shell)
 
 ---
 *Created: 2026-05-09*
-*Last updated: 2026-05-10 after completing 05-02 session countdown timer*
+*Last updated: 2026-06-10 after Phase 6 requirements rewrite (MEDT-01..MEDT-08)*
