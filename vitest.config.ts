@@ -9,6 +9,9 @@ export default defineConfig({
       },
     },
     globals: true,
-    setupFiles: [],
+    // jsdom 29 does not ship an IndexedDB implementation; fake-indexeddb/auto
+    // installs `indexedDB` and the related `IDB*` constructors on the global
+    // object so tests can hit a real (in-memory) IDB without manual setup.
+    setupFiles: ['fake-indexeddb/auto'],
   },
 });
