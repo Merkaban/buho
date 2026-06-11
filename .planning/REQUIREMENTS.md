@@ -44,8 +44,14 @@ Requirements for initial release. Each maps to roadmap phases.
 
 ### Meditation
 
-- [ ] **MEDT-01**: Meditation mode shows placeholder screen
-- [ ] **MEDT-02**: Meditation mode uses consistent dark design
+- [ ] **MEDT-01**: User can upload an audio file from the iOS file picker
+- [ ] **MEDT-02**: Uploaded meditations persist locally (IndexedDB) across app restarts
+- [ ] **MEDT-03**: User can browse a library of uploaded meditations
+- [ ] **MEDT-04**: User can tap a meditation to start playback
+- [ ] **MEDT-05**: Player shows title + elapsed/total time and supports play/pause/stop
+- [ ] **MEDT-06**: Screen does not lock during meditation playback
+- [ ] **MEDT-07**: User can delete a meditation from the library
+- [ ] **MEDT-08**: Meditation panel matches the dark sage aesthetic
 
 ## v2 Requirements
 
@@ -107,12 +113,18 @@ Which phases cover which requirements. Updated during roadmap creation.
 | NAV-02 | Phase 6 | Pending |
 | MEDT-01 | Phase 6 | Pending |
 | MEDT-02 | Phase 6 | Pending |
+| MEDT-03 | Phase 6 | Pending |
+| MEDT-04 | Phase 6 | Pending |
+| MEDT-05 | Phase 6 | Pending |
+| MEDT-06 | Phase 6 | Pending |
+| MEDT-07 | Phase 6 | Pending |
+| MEDT-08 | Phase 6 | Pending |
 
 **Coverage:**
-- v1 requirements: 23 total
-- Mapped to phases: 23
+- v1 requirements: 29 total
+- Mapped to phases: 29
 - Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-05-09*
-*Last updated: 2026-05-10 after Phase 4 completion (BRTH-13 complete)*
+*Last updated: 2026-06-10 after Phase 6 requirements rewrite (MEDT-01..MEDT-08)*
