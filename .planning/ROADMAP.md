@@ -13,7 +13,7 @@
 | 3 | Audio Integration | Complete (2/2) | BRTH-09, BRTH-10, BRTH-11, BRTH-12 |
 | 4 | Wake Lock & Session Polish | Complete (1/1) | BRTH-13 |
 | 5 | Settings & Persistence | Complete (2/2) | SETT-01, SETT-02 |
-| 6 | 3/6 | In Progress|  |
+| 6 | 4/6 | In Progress|  |
 
 ---
 
@@ -142,7 +142,7 @@ Plans:
 ### Phase 6: Navigation & Meditation Placeholder
 **Goal:** Three-panel swipeable layout (Landing, Breathing, Meditation) with a working meditation library that lets the user upload, browse, play, and delete personal recordings
 **Mode:** mvp
-**Plans:** 3/6 plans executed
+**Plans:** 4/6 plans executed
 
 Plans:
 
@@ -154,7 +154,7 @@ Plans:
 - [x] 06-03-PLAN.md — MeditationRecord type + meditationsDB.ts (idb-backed CRUD) + integration tests
 
 **Wave 3** *(blocked on Wave 2 completion)*
-- [ ] 06-04-PLAN.md — Library slice: useMeditationLibrary + MeditationLibrary + MeditationListRow + AddMeditationButton + extractDuration
+- [x] 06-04-PLAN.md — Library slice: useMeditationLibrary + MeditationLibrary + MeditationListRow + AddMeditationButton + extractDuration
 
 **Wave 4** *(blocked on Wave 3 completion)*
 - [ ] 06-05-PLAN.md — Player slice: useMeditationPlayer + MeditationPlayer (Howler + wake lock)
