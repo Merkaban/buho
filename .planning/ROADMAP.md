@@ -13,7 +13,7 @@
 | 3 | Audio Integration | Complete (2/2) | BRTH-09, BRTH-10, BRTH-11, BRTH-12 |
 | 4 | Wake Lock & Session Polish | Complete (1/1) | BRTH-13 |
 | 5 | Settings & Persistence | Complete (2/2) | SETT-01, SETT-02 |
-| 6 | 5/6 | In Progress|  |
+| 6 | Navigation & Meditation Placeholder | Complete (6/6) | NAV-01, NAV-02, MEDT-01, MEDT-02, MEDT-03, MEDT-04, MEDT-05, MEDT-06, MEDT-07, MEDT-08 |
 
 ---
 
@@ -142,7 +142,7 @@ Plans:
 ### Phase 6: Navigation & Meditation Placeholder
 **Goal:** Three-panel swipeable layout (Landing, Breathing, Meditation) with a working meditation library that lets the user upload, browse, play, and delete personal recordings
 **Mode:** mvp
-**Plans:** 5/6 plans executed
+**Plans:** 6/6 plans executed (COMPLETE)
 
 Plans:
 
@@ -160,7 +160,7 @@ Plans:
 - [x] 06-05-PLAN.md — Player slice: useMeditationPlayer + MeditationPlayer (Howler + wake lock)
 
 **Wave 5** *(blocked on Wave 4 completion)*
-- [ ] 06-06-PLAN.md — MeditationScreen orchestration + navigation.test.tsx update + iOS device smoke checkpoint
+- [x] 06-06-PLAN.md — MeditationScreen orchestration + navigation.test.tsx update + iOS device smoke checkpoint
 
 **Success Criteria:**
 1. User can swipe between Landing, Breathing, and Meditation panels
@@ -190,4 +190,4 @@ Phase 1 (PWA Shell)
 
 ---
 *Created: 2026-05-09*
-*Last updated: 2026-06-10 after Phase 6 requirements rewrite (MEDT-01..MEDT-08)*
+*Last updated: 2026-06-11 after Phase 6 plan 06-06 closed (iOS checkpoint approved — milestone complete)*
