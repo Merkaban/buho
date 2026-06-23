@@ -2,8 +2,6 @@ import { useRef, useCallback, useEffect } from 'react';
 import { Howl, Howler } from 'howler';
 import type { BreathingConfig } from '../types/breathing';
 
-const INITIAL_DELAY_MS = 800;
-
 export function useBreathingAudio() {
   const cuesRef = useRef<{ in: Howl; hold: Howl; out: Howl } | null>(null);
   const musicRef = useRef<Howl | null>(null);
@@ -97,7 +95,7 @@ export function useBreathingAudio() {
     }
 
     // Schedule first cycle with initial delay (D-09)
-    scheduleCycle(config, INITIAL_DELAY_MS);
+    scheduleCycle(config, 800);
   }, [scheduleCycle]);
 
   const stop = useCallback(() => {
