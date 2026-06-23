@@ -10,7 +10,6 @@ vi.mock('../lib/meditationsDB', () => ({
   listMeditations: vi.fn().mockResolvedValue([]),
   addMeditation: vi.fn().mockResolvedValue(undefined),
   deleteMeditation: vi.fn().mockResolvedValue(undefined),
-  getMeditation: vi.fn().mockResolvedValue(undefined),
 }));
 
 function makeRecord(overrides?: Partial<MeditationRecord>): MeditationRecord {

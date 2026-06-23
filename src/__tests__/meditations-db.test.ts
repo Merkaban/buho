@@ -130,12 +130,6 @@ describe('meditationsDB (MEDT-01, MEDT-02, MEDT-03, MEDT-07)', () => {
     expect(list[0].id).toBe('rec-2');
   });
 
-  it('getMeditation returns undefined for a missing id (does not throw)', async () => {
-    const { getMeditation } = await freshModule();
-    const result = await getMeditation('nonexistent-id');
-    expect(result).toBeUndefined();
-  });
-
   it('persists across module reload (record survives a fresh import — proof it is in IDB, not memory)', async () => {
     const first = await freshModule();
     await first.addMeditation({

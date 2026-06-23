@@ -47,8 +47,3 @@ export async function deleteMeditation(id: string): Promise<void> {
   const db = await getDb();
   await db.delete(STORE, id);
 }
-
-export async function getMeditation(id: string): Promise<MeditationRecord | undefined> {
-  const db = await getDb();
-  return (await db.get(STORE, id)) as MeditationRecord | undefined;
-}
