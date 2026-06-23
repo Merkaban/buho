@@ -14,9 +14,3 @@ export interface MeditationRecord {
   blob: Blob;          // audio binary stored in IDB (D-06)
   addedAt: number;     // Date.now() — used as the sort index for listMeditations
 }
-
-export interface MeditationState {
-  view: MeditationView;
-  selectedId: string | null;
-  meditations: MeditationRecord[];
-}
