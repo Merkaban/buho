@@ -389,7 +389,7 @@ Implementer must mirror these existing-codebase conventions exactly:
 
 ## PageDots — Confirmed No Visual Change
 
-The existing `PageDots` component already supports 3 dots (`total={3}`). Visual treatment locked Phase 1:
+The existing `PageDots` component renders exactly 3 dots — locked by D-01 (no `total` prop; the 3-panel structure is final). Visual treatment locked Phase 1:
 - 8×8px dots (`w-2 h-2`)
 - 8px gap (`gap-2`)
 - Active: `bg-white`
