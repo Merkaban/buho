@@ -24,7 +24,7 @@ function App() {
         <BreathingScreen />
         <MeditationScreen />
       </SwipeContainer>
-      <PageDots total={3} active={activePage} />
+      <PageDots active={activePage} />
     </div>
   );
 }

@@ -1,9 +1,8 @@
 interface PageDotsProps {
-  total: number;
   active: number;
 }
 
-export function PageDots({ total, active }: PageDotsProps) {
+export function PageDots({ active }: PageDotsProps) {
   return (
     <div
       role="group"
@@ -11,7 +10,7 @@ export function PageDots({ total, active }: PageDotsProps) {
       className="fixed bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-10"
       style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
     >
-      {Array.from({ length: total }, (_, i) => (
+      {[0, 1, 2].map((i) => (
         <div
           key={i}
           aria-hidden="true"
