@@ -9,10 +9,7 @@ import { useBreathingAudio } from '../hooks/useBreathingAudio';
 import { useWakeLock } from '../hooks/useWakeLock';
 import { useSessionTimer } from '../hooks/useSessionTimer';
 import { loadSettings, saveSettings } from '../hooks/useSettings';
-import { bootLog } from '../lib/bootLog';
 import type { BreathingState } from '../types/breathing';
-
-bootLog('BreathingScreen module evaluated');
 
 const initialState: BreathingState = {
   session: 'idle',
@@ -20,7 +17,6 @@ const initialState: BreathingState = {
 };
 
 export function BreathingScreen() {
-  bootLog('BreathingScreen render() entered');
   const [state, dispatch] = useReducer(breathingReducer, initialState);
   const { elementRef, start, stop, stopAfterCycle } = useBreathingAnimation();
   const { start: audioStart, stop: audioStop, windDown, fadeMusic, toggleMusic, toggleVoice } = useBreathingAudio();

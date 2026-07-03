@@ -1,7 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { listMeditations, addMeditation, deleteMeditation } from '../lib/meditationsDB';
 import { extractDuration } from '../lib/extractDuration';
-import { bootLog } from '../lib/bootLog';
 import type { MeditationRecord, MeditationMeta } from '../types/meditation';
 
 // React-side library state. Lazy-hydrates from IndexedDB on mount; exposes
@@ -43,16 +42,13 @@ export function useMeditationLibrary(): {
     // is still pending. This is the project's first async hydration, so the
     // pattern is documented here as the new convention.
     let cancelled = false;
-    bootLog('useMeditationLibrary: listMeditations() called');
     listMeditations()
       .then((list) => {
-        bootLog(`useMeditationLibrary: listMeditations() resolved n=${list.length}`);
         if (cancelled) return;
         setMeditations(list);
         setHydrated(true);
       })
-      .catch((err) => {
-        bootLog(`useMeditationLibrary: listMeditations() rejected ${String(err)}`);
+      .catch(() => {
         // If the IDB open itself fails (private mode, corrupt DB, etc.) we
         // still flip hydrated true so the UI can render the empty state — the
         // user can still try to add. The error toast surfaces on the next add.
