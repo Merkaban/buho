@@ -1,4 +1,9 @@
+import { bootLog } from '../lib/bootLog';
+
+bootLog('LandingScreen module evaluated');
+
 export function LandingScreen() {
+  bootLog('LandingScreen render() entered');
   return (
     <div
       data-panel="landing"
