@@ -9,9 +9,19 @@ describe('Service Worker / Offline Config (PWA-02)', () => {
     expect(viteConfig).toContain("registerType: 'autoUpdate'");
   });
 
-  it('has globPatterns to precache static assets', () => {
+  it('has globPatterns to precache static assets (mp3 excluded — runtime cached)', () => {
     expect(viteConfig).toContain('globPatterns:');
-    expect(viteConfig).toContain('**/*.{js,css,html,ico,png,svg,woff2,mp3}');
+    expect(viteConfig).toContain('**/*.{js,css,html,ico,png,svg,woff2}');
+    // mp3 must NOT be in precache — see vite.config.ts ponytail note (iOS PWA
+    // cold-start memory pressure killed the renderer when 5.7 MB of audio
+    // was precached on every launch).
+    expect(viteConfig).not.toContain('woff2,mp3');
+  });
+
+  it('has runtime CacheFirst rule for mp3 so offline still works', () => {
+    expect(viteConfig).toContain('runtimeCaching');
+    expect(viteConfig).toContain('CacheFirst');
+    expect(viteConfig).toMatch(/\.mp3\$/);
   });
 
   it('has cleanupOutdatedCaches enabled', () => {

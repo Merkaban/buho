@@ -22,7 +22,13 @@ export function useBreathingAudio() {
       src: ['/audio/meditation.mp3'],
       html5: true,
       loop: false,
-      preload: true,
+      // ponytail: preload deferred — the 5.7 MB music track was being
+      // fetched + decoded on every cold start (the hook mounts inside the
+      // swipe container even if the user never visits the breathing panel),
+      // contributing to iOS Safari PWA renderer OOM. Howler loads on the
+      // first play() call instead. Pair-change with the SW precache fix in
+      // vite.config.ts that drops mp3 from globPatterns.
+      preload: false,
       volume: 0.4,
       onend: () => {
         musicNeedsRestartRef.current = true;
