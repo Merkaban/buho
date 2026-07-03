@@ -18,7 +18,8 @@ import type { MeditationRecord, MeditationMeta } from '../types/meditation';
 // the ENTIRE record set — including the 18.7 MB Blob — into the renderer heap
 // before the JS strip could drop the field. On iOS Safari standalone-PWA the
 // jetsam watchdog killed the renderer ~100ms after that allocation spike on
-// every cold start (confirmed on-device via the safe-boot log). Splitting the
+// every cold start (confirmed on-device: crash correlated exactly with one
+// large blob present in IDB). Splitting the
 // stores means the cold-start read (listMeditations → meta store) never
 // materializes a Blob at all.
 
@@ -39,6 +40,12 @@ function getDb(): Promise<IDBPDatabase> {
   if (!dbPromise) {
     dbPromise = openDB(DB_NAME, DB_VERSION, {
       async upgrade(db, oldVersion, _newVersion, tx) {
+        // GUARD: no non-IDB awaits (fetch, timers, arbitrary promises) inside
+        // this block. The versionchange transaction auto-commits as soon as it
+        // has no pending IDB requests; awaiting anything that isn't an IDB
+        // request would let the tx close underneath us and abort the upgrade.
+        // Every await below is backed by an IDB request (cursor / put).
+
         // Fresh install (oldVersion 0) or upgrade from v1 both need the two
         // new stores.
         if (!db.objectStoreNames.contains(META_STORE)) {
@@ -49,16 +56,16 @@ function getDb(): Promise<IDBPDatabase> {
           db.createObjectStore(BLOB_STORE, { keyPath: 'id' });
         }
 
-        // MIGRATION v1 → v2. KNOWN RISK: iterating the legacy store reads each
-        // full record — including its Blob — into the renderer, exactly the
-        // clone we are trying to avoid. On a memory-tight cold start this
-        // single upgrade launch could itself be jetsam-killed. Since this is a
-        // single-user personal app (D-06 scope), we accept that risk for a
-        // SIMPLE cursor migration: split each legacy record into the two new
-        // stores, then drop the legacy store. If the upgrade launch is killed
-        // mid-migration, the user re-adds the mp3 on a fresh install — no data
-        // integrity concern beyond re-import. This is recorded in the debug
-        // session file with reasoning.
+        // MIGRATION v1 → v2. FAILURE SEMANTICS: the versionchange transaction
+        // is atomic — if the upgrade launch is jetsam-killed mid-migration, the
+        // whole tx rolls back to the intact v1 database (no data loss, no
+        // partial split). The real risk is therefore NOT re-import; it is a
+        // retry crash-loop where every relaunch re-attempts the upgrade and is
+        // killed again. That risk is low here: the cursor reads one record at a
+        // time, and WebKit deserializes IDB Blobs as file-backed handles, so
+        // migration peak allocation is well below the v1 getAllFromIndex spike
+        // that caused the original crash. Split each legacy record into the two
+        // new stores, then drop the legacy store.
         if (oldVersion >= 1 && db.objectStoreNames.contains(LEGACY_STORE)) {
           const legacy = tx.objectStore(LEGACY_STORE);
           const metaStore = tx.objectStore(META_STORE);
@@ -74,6 +81,33 @@ function getDb(): Promise<IDBPDatabase> {
           db.deleteObjectStore(LEGACY_STORE);
         }
       },
+      blocked() {
+        // Another (older-version) connection is keeping v2 from opening — most
+        // likely a zombie iOS PWA instance still holding the v1 connection.
+        // Log it; the open stays pending until the other connection closes.
+        console.warn('[meditationsDB] open blocked: an older DB connection is still open');
+      },
+      blocking(_currentVersion, _blockedVersion, event) {
+        // We are the connection holding an older version open while a newer
+        // version wants to upgrade. Close so the upgrade can proceed instead of
+        // hanging silently (which would render an empty library with no error).
+        // Cheap insurance on iOS, where a zombie PWA instance can linger.
+        (event.target as IDBDatabase | null)?.close();
+        // Drop the memoized promise so the next call re-opens at the new version.
+        dbPromise = null;
+      },
+      terminated() {
+        // The browser abnormally closed the connection (e.g. the DB was
+        // deleted, or the renderer was reclaimed). Reset so the next call
+        // re-opens rather than reusing a dead handle.
+        dbPromise = null;
+      },
+    }).catch((err) => {
+      // Don't leave a rejected promise memoized forever — one transient open
+      // failure would otherwise brick DB access until a full relaunch. Reset so
+      // the next call retries the open.
+      dbPromise = null;
+      throw err;
     });
   }
   return dbPromise;
