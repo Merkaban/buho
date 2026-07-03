@@ -15,6 +15,13 @@ dist-ssr
 # Claude Code
 .claude/
 
+# Loose local assets (candidate audio/logo files, not wired into the app)
+elevenlabs_rhythm_breathe_in.mp3
+elevenlabs_rhythm_breathe_out.mp3
+elevenlabs_rhythm_hold.mp3
+eule_uhl_logo.jpg
+leberch-meditation-513747.mp3
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
