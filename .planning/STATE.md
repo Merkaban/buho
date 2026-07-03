@@ -92,6 +92,7 @@ Plans: 17/17 complete (Phase 1: 3/3, Phase 2: 3/3, Phase 3: 2/2, Phase 4: 1/1, P
 | 260512-uih | 2026-05-12 | Graceful session end: finish current exhale, stop voice cues, fade music over 10s |
 | 260623-goa | 2026-06-23 | Apply 3 safe ponytail cuts: drop unused MeditationState, getMeditation(), and INITIAL_DELAY_MS constant (−19 LOC, 156/156 tests green) |
 | 260623-gvx | 2026-06-23 | Drop PageDots.total prop, hardcode 3 dots (3-panel structure locked as final by D-01) |
+| debug | 2026-07-03 | Resolved ios-pwa-cold-start-crash: single-store IDB cloned the 18.7 MB blob on every cold start → iOS jetsam killed the renderer. Fix = meta/blob store split (44646c8) so cold start never materializes the blob; removed boot instrumentation (9841acc) + hardened IDB open (51bc43c). Verified on-device. |
 
 ## Last Session
 
