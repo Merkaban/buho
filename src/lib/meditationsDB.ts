@@ -1,5 +1,5 @@
 import { openDB, type IDBPDatabase } from 'idb';
-import type { MeditationRecord } from '../types/meditation';
+import type { MeditationRecord, MeditationMeta } from '../types/meditation';
 
 // Persistence layer for the meditation library (D-06: Blobs in IndexedDB,
 // not localStorage). Lazy-opens a single database with one object store on
@@ -29,11 +29,30 @@ function getDb(): Promise<IDBPDatabase> {
   return dbPromise;
 }
 
-export async function listMeditations(): Promise<MeditationRecord[]> {
+export async function listMeditations(): Promise<MeditationMeta[]> {
   const db = await getDb();
-  // Q3 RESOLVED: newest-first; index returns ascending, reverse for descending
-  const records = await db.getAllFromIndex(STORE, 'addedAt');
-  return (records as MeditationRecord[]).reverse();
+  // Q3 RESOLVED: newest-first; index returns ascending, reverse for descending.
+  // ponytail: strip `blob` in JS — IDB has no field-level projection, but we
+  // must not let multi-MB Blobs land in React state on cold start (iOS Safari
+  // OOMs the PWA renderer). The Blob still rides through structured clone
+  // during the read; dropping it before returning keeps the caller-side
+  // memory residency bounded to metadata only.
+  const records = (await db.getAllFromIndex(STORE, 'addedAt')) as MeditationRecord[];
+  return records
+    .map(({ blob: _blob, ...meta }) => meta)
+    .reverse();
+}
+
+// ponytail: paired blob loader. Called only when the user taps a meditation
+// to play, so the blob is in memory exactly while it's being played, not for
+// the lifetime of the library hook.
+export async function getMeditationBlob(id: string): Promise<Blob> {
+  const db = await getDb();
+  const record = (await db.get(STORE, id)) as MeditationRecord | undefined;
+  if (!record) {
+    throw new Error(`Meditation not found: ${id}`);
+  }
+  return record.blob;
 }
 
 export async function addMeditation(record: MeditationRecord): Promise<void> {

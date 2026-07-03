@@ -54,8 +54,8 @@ describe('meditationsDB (MEDT-01, MEDT-02, MEDT-03, MEDT-07)', () => {
     vi.resetModules();
   });
 
-  it('round-trips a record: addMeditation then listMeditations preserves the metadata fields and the blob field', async () => {
-    const { addMeditation, listMeditations } = await freshModule();
+  it('round-trips metadata only — addMeditation persists the full record but listMeditations strips the blob field (ponytail: lazy-blob fix for iOS cold-start OOM)', async () => {
+    const { addMeditation, listMeditations, getMeditationBlob } = await freshModule();
     const blob = makeBlob(1);
     const record = {
       id: 'rec-1',
@@ -73,12 +73,16 @@ describe('meditationsDB (MEDT-01, MEDT-02, MEDT-03, MEDT-07)', () => {
     expect(list[0].filename).toBe('morning.mp3');
     expect(list[0].duration).toBe(123.4);
     expect(list[0].addedAt).toBe(1700000000000);
-    // The `blob` field round-trips through the structured-clone path. Note:
-    // jsdom's Blob is not a faithful platform Blob, so fake-indexeddb returns
-    // an empty object placeholder rather than a usable Blob in tests. Real
-    // Blob byte-fidelity is verified on-device in Plan 06-06 (manual smoke
-    // test, per RESEARCH.md Validation Architecture).
-    expect(list[0]).toHaveProperty('blob');
+    // Lazy-blob: the list result MUST NOT carry the Blob field. This is the
+    // load-bearing invariant — keeping multi-MB blobs out of React state on
+    // cold start is what stops the iOS Safari PWA renderer from getting
+    // killed by the OS.
+    expect(list[0]).not.toHaveProperty('blob');
+
+    // The blob remains retrievable via the lazy loader, proving the record
+    // itself was persisted in full and only the projection drops the field.
+    const retrieved = await getMeditationBlob('rec-1');
+    expect(retrieved).toBeDefined();
   });
 
   it('lists two records in descending-by-addedAt (newest-first) order', async () => {

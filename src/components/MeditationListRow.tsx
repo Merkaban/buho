@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
 import { formatTime } from '../lib/formatTime';
-import type { MeditationRecord } from '../types/meditation';
+import type { MeditationMeta } from '../types/meditation';
 
 interface MeditationListRowProps {
-  meditation: MeditationRecord;
+  meditation: MeditationMeta;
   onSelect: (id: string) => void;
   onDelete: (id: string) => void;
 }

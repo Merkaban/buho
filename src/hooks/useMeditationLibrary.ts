@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
 import { listMeditations, addMeditation, deleteMeditation } from '../lib/meditationsDB';
 import { extractDuration } from '../lib/extractDuration';
-import type { MeditationRecord } from '../types/meditation';
+import { bootLog } from '../lib/bootLog';
+import type { MeditationRecord, MeditationMeta } from '../types/meditation';
 
 // React-side library state. Lazy-hydrates from IndexedDB on mount; exposes
 // add/remove that wraps `meditationsDB` and `extractDuration` so the UI never
@@ -23,7 +24,7 @@ import type { MeditationRecord } from '../types/meditation';
 //   error        — last error message for the inline toast; null when none
 //   dismissError — clears error
 export function useMeditationLibrary(): {
-  meditations: MeditationRecord[];
+  meditations: MeditationMeta[];
   hydrated: boolean;
   adding: boolean;
   add: (file: File) => Promise<void>;
@@ -31,7 +32,7 @@ export function useMeditationLibrary(): {
   error: string | null;
   dismissError: () => void;
 } {
-  const [meditations, setMeditations] = useState<MeditationRecord[]>([]);
+  const [meditations, setMeditations] = useState<MeditationMeta[]>([]);
   const [hydrated, setHydrated] = useState(false);
   const [adding, setAdding] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -42,13 +43,16 @@ export function useMeditationLibrary(): {
     // is still pending. This is the project's first async hydration, so the
     // pattern is documented here as the new convention.
     let cancelled = false;
+    bootLog('useMeditationLibrary: listMeditations() called');
     listMeditations()
       .then((list) => {
+        bootLog(`useMeditationLibrary: listMeditations() resolved n=${list.length}`);
         if (cancelled) return;
         setMeditations(list);
         setHydrated(true);
       })
-      .catch(() => {
+      .catch((err) => {
+        bootLog(`useMeditationLibrary: listMeditations() rejected ${String(err)}`);
         // If the IDB open itself fails (private mode, corrupt DB, etc.) we
         // still flip hydrated true so the UI can render the empty state — the
         // user can still try to add. The error toast surfaces on the next add.
@@ -79,8 +83,11 @@ export function useMeditationLibrary(): {
       };
       try {
         await addMeditation(record);
-        // Prepend — newest-first matches plan 06-03 sort order.
-        setMeditations((prev) => [record, ...prev]);
+        // ponytail: state holds metadata only. The blob was just written to
+        // IDB; keeping it in React state too would defeat the lazy-blob fix
+        // and re-introduce the iOS cold-start OOM.
+        const { blob: _blob, ...meta } = record;
+        setMeditations((prev) => [meta, ...prev]);
       } catch (err) {
         if (err instanceof Error && /quota/i.test(err.name + ' ' + err.message)) {
           setError('Not enough storage');

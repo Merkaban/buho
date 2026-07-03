@@ -1,10 +1,11 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useMeditationPlayer } from '../hooks/useMeditationPlayer';
+import { getMeditationBlob } from '../lib/meditationsDB';
 import { formatTime } from '../lib/formatTime';
-import type { MeditationRecord } from '../types/meditation';
+import type { MeditationMeta, MeditationRecord } from '../types/meditation';
 
 interface MeditationPlayerProps {
-  meditation: MeditationRecord;
+  meta: MeditationMeta;
   /**
    * User tapped the back chevron OR the meditation finished naturally (D-14, D-15).
    * Caller is responsible for switching the panel back to library view.
@@ -36,30 +37,45 @@ function stripExtension(filename: string): string {
  * `onBack` is wired to the hook's `onEnd` so natural-end auto-closes the
  * player (D-15) without an extra prop or callback chain.
  */
-export function MeditationPlayer({ meditation, onBack }: MeditationPlayerProps) {
+export function MeditationPlayer({ meta, onBack }: MeditationPlayerProps) {
   const { play, pause, stop, isPlaying, elapsed, duration } = useMeditationPlayer({
     onEnd: onBack,
   });
 
+  // ponytail: blob is loaded lazily — meta is all that lives in the library
+  // state. We pull the Blob from IDB on mount, then auto-start playback.
+  // Holding the record locally (not in the hook tree) so the blob is released
+  // when this component unmounts.
+  const [record, setRecord] = useState<MeditationRecord | null>(null);
+
   // StrictMode in React 19 invokes mount-effects twice in development; the
   // ref ensures we don't call play() a second time (which would tear down the
-  // first session via the Pitfall-5 guard and re-init unnecessarily).
+  // first session via the Pitfall-5 guard and re-init unnecessarily). No
+  // cancelled-flag here on purpose — under StrictMode the cleanup runs
+  // synchronously between the two mounts, so flagging would cancel the
+  // pending blob load before the second mount sees it; a stale resolve after
+  // a real unmount is harmless (setState is a no-op).
   const startedRef = useRef(false);
   useEffect(() => {
     if (startedRef.current) return;
     startedRef.current = true;
-    play(meditation);
-    // We deliberately omit `meditation` and `play` from the dep array — this
-    // effect runs ONCE on mount; the parent is responsible for re-mounting
-    // when the user picks a different meditation.
+    getMeditationBlob(meta.id)
+      .then((blob) => {
+        const r: MeditationRecord = { ...meta, blob };
+        setRecord(r);
+        play(r);
+      })
+      .catch(() => {
+        onBack();
+      });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleToggle = () => {
     if (isPlaying) {
       pause();
-    } else {
-      play(meditation);
+    } else if (record) {
+      play(record);
     }
   };
 
@@ -68,7 +84,7 @@ export function MeditationPlayer({ meditation, onBack }: MeditationPlayerProps) 
     onBack();
   };
 
-  const title = stripExtension(meditation.filename);
+  const title = stripExtension(meta.filename);
   const timeLabel = `${formatTime(elapsed)} / ${formatTime(duration)}`;
 
   return (

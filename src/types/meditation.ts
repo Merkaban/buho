@@ -14,3 +14,9 @@ export interface MeditationRecord {
   blob: Blob;          // audio binary stored in IDB (D-06)
   addedAt: number;     // Date.now() — used as the sort index for listMeditations
 }
+
+// ponytail: metadata-only projection of MeditationRecord. listMeditations()
+// returns this so the ~MB blob never enters React state on cold start —
+// previously the blob residency killed the iOS PWA renderer on relaunch.
+// The blob is fetched lazily via getMeditationBlob(id) when the user taps play.
+export type MeditationMeta = Omit<MeditationRecord, 'blob'>;

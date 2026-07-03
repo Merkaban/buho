@@ -8,14 +8,14 @@ import type { MeditationRecord } from '../types/meditation';
 // player's Howler-driven internals are covered by plan 06-05 tests.
 vi.mock('../components/MeditationPlayer', () => ({
   MeditationPlayer: ({
-    meditation,
+    meta,
     onBack,
   }: {
-    meditation: MeditationRecord;
+    meta: { filename: string };
     onBack: () => void;
   }) => (
     <div data-testid="meditation-player">
-      <h1>{meditation.filename}</h1>
+      <h1>{meta.filename}</h1>
       <button onClick={onBack}>back-mock</button>
     </div>
   ),

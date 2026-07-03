@@ -2,7 +2,10 @@ import { useState, useEffect } from 'react';
 import { useMeditationLibrary } from '../hooks/useMeditationLibrary';
 import { MeditationLibrary } from './MeditationLibrary';
 import { MeditationPlayer } from './MeditationPlayer';
+import { bootLog } from '../lib/bootLog';
 import type { MeditationView } from '../types/meditation';
+
+bootLog('MeditationScreen module evaluated');
 
 /**
  * Meditation panel (D-01 panel 2 of 3) — orchestration container.
@@ -27,6 +30,7 @@ import type { MeditationView } from '../types/meditation';
  * player with no source.
  */
 export function MeditationScreen() {
+  bootLog('MeditationScreen render() entered');
   const [view, setView] = useState<MeditationView>('library');
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const { meditations, hydrated, adding, add, remove, error, dismissError } =
@@ -94,7 +98,7 @@ export function MeditationScreen() {
             onDismissError={dismissError}
           />
         ) : selected ? (
-          <MeditationPlayer meditation={selected} onBack={handleBack} />
+          <MeditationPlayer meta={selected} onBack={handleBack} />
         ) : null}
       </div>
     </div>

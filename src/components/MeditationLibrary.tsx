@@ -1,9 +1,9 @@
 import { MeditationListRow } from './MeditationListRow';
 import { AddMeditationButton } from './AddMeditationButton';
-import type { MeditationRecord } from '../types/meditation';
+import type { MeditationMeta } from '../types/meditation';
 
 export interface MeditationLibraryProps {
-  meditations: MeditationRecord[];
+  meditations: MeditationMeta[];
   hydrated: boolean;
   adding: boolean;
   error: string | null;
